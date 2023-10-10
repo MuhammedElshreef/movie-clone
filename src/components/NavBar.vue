@@ -6,9 +6,9 @@
     <button>
       <img src="../assets/icons/homeIcon.svg" class="w-8 active:stroke-blue-400" alt="" />
     </button>
-    <!-- <button>
+    <button>
       <img src="../assets/icons/movieIcon.svg" class="w-8" alt="" />
-    </button> -->
+    </button>
     <button>
       <img src="../assets/icons/tvIcon.svg" class="w-8" alt="" />
     </button>
