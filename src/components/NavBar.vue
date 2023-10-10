@@ -4,7 +4,7 @@
     class="fixed bg-[#141414] min-h-screen w-20 border-r-[0.1px] border-gray-500 flex flex-col items-center pt-9 gap-16"
   >
     <button>
-      <img src="../assets/icons/homeIcon.svg" class="w-8 active:stroke-blue-400" alt="" />
+      <img src="../assets/icons/homeIcon.svg" class="w-8 " alt="" />
     </button>
     <button>
       <img src="../assets/icons/movieIcon.svg" class="w-8" alt="" />
