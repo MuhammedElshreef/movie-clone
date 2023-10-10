@@ -7,7 +7,7 @@
       <img src="../assets/icons/homeIcon.svg" class="w-8" alt="" />
     </button>
     <button>
-      <img src="../assets/icons/movieIcon.svg" class="w-8" alt="" />
+      <img src="../assets/Icons/movieIcon.svg" class="w-8" alt="" />
     </button>
     <button>
       <img src="../assets/icons/tvIcon.svg" class="w-8" alt="" />
