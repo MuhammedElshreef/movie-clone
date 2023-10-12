@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+module.exports = {
+  content: [
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './node_modules/tw-elements/dist/js/**/*.js'
+  ],
   theme: {
     extend: {
       boxShadow: {
@@ -8,5 +12,9 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [
+    require('daisyui'),
+    require('tw-elements/dist/plugin.cjs'),
+    require('@tailwindcss/aspect-ratio')
+  ]
 }
