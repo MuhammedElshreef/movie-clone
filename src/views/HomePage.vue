@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useTrending } from '../stores/trending'
-import TrailerModal from '../components/TrailerModal.vue'
+import HeroBoard from '../components/HeroBoard.vue'
+import trendingMovie from '../components/trendingMovie.vue'
+import TrendingTv from '../components/TrendingTv.vue'
 const trending = useTrending()
 const randomTrendingMovie = ref()
 const random = Math.floor(Math.random() * trending.items.length)
@@ -21,31 +23,20 @@ setTimeout(() => {
           class="inline-block h-20 w-20 animate-spin rounded-full border-4 border-[#1E89DE] border-solid border-current border-r-transparent motion-reduce:animate-[spin_1.5s_linear_infinite]"
         ></div>
       </div>
-      <div
-        v-show="randomTrendingMovie"
-        class="bg-black text-white flex flex-col justify-center px-12 w-1/2"
-      >
-        <div class="absolute w-[40%] z-[1100] flex flex-col gap-12">
-          <p class="text-4xl">{{ randomTrendingMovie.title }} {{ randomTrendingMovie.name }}</p>
-
-          <p class="text-base">{{ randomTrendingMovie.overview }}</p>
-          <TrailerModal
-            :showId="randomTrendingMovie.id"
-            :showType="randomTrendingMovie.media_type"
-          />
-        </div>
-      </div>
-      <div class="w-[73%] relative">
-        <div
-          class="absolute w-full h-full"
-          style="background-image: linear-gradient(90deg, #000 0, transparent 50%, transparent)"
-        ></div>
-        <img
-          :src="`https://image.tmdb.org/t/p/w500${randomTrendingMovie.backdrop_path}`"
-          class="w-full h-full"
-          alt=""
-        />
-      </div>
+    </div>
+    <div>
+      <HeroBoard :show="randomTrendingMovie" />
+    </div>
+    <trendingMovie />
+    <TrendingTv />
+    <div class="container py-12 flex flex-col gap-2">
+      <h2>© 2023 All rights reserved.</h2>
+      <h2>
+        Designed by Jason Ujma-Alvis built by me, data provided by
+        <a href="https://www.themoviedb.org/" target="_blank" class="text-[#1E89DE] underline"
+          >TMDb.</a
+        >
+      </h2>
     </div>
   </div>
 </template>

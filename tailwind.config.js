@@ -6,6 +6,12 @@ module.exports = {
     './node_modules/tw-elements/dist/js/**/*.js'
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        default: '2rem'
+      }
+    },
     extend: {
       boxShadow: {
         custom: '7px 0px rgba(0,0,0, 0.2)'
