@@ -8,7 +8,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
 
 import { Navigation, FreeMode } from 'swiper/modules'
-import { usePopularTv } from '../stores/PopularTv'
+import { usePopularTv } from '../stores/popularTv'
 const popularTv = usePopularTv()
 </script>
 <template>
