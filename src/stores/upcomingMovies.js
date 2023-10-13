@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { ref } from 'vue'
-export const useStoreMovie = defineStore('movies', () => {
-  const test = ref([])
+export const useUpcomingMovies = defineStore('upcomingMovie', () => {
+  const shows = ref([])
   const options = {
     method: 'GET',
-    url: 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc',
+    url: 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
     headers: {
       accept: 'application/json',
       Authorization:
@@ -15,6 +15,7 @@ export const useStoreMovie = defineStore('movies', () => {
 
   axios
     .request(options)
-    .then((res) => test.value.push(...res.data.results))
+    .then((res) => shows.value.push(...res.data.results))
     .catch((error) => console.log(error))
+  return { shows }
 })

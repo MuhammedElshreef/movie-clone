@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const activeButton = ref(null)
+const activeButton = ref(1)
 </script>
 <template>
   <div

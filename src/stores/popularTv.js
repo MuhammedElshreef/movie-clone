@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { ref } from 'vue'
-export const useTrending = defineStore('trending', () => {
+export const usePopularTv = defineStore('popularTv', () => {
   const shows = ref([])
   const options = {
     method: 'GET',
-    url: 'https://api.themoviedb.org/3/trending/all/day?language=en-US',
+    url: 'https://api.themoviedb.org/3/tv/popular?language=en-US&page=1',
     headers: {
       accept: 'application/json',
       Authorization:
@@ -16,8 +16,6 @@ export const useTrending = defineStore('trending', () => {
   axios
     .request(options)
     .then((res) => shows.value.push(...res.data.results))
-
-    .catch((err) => console.log(err))
-
+    .catch((error) => console.log(error))
   return { shows }
 })

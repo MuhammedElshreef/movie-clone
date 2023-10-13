@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { ref } from 'vue'
 export const useTrendingTv = defineStore('trendingTv', () => {
-  const trending = ref([])
+  const shows = ref([])
   const options = {
     method: 'GET',
     url: 'https://api.themoviedb.org/3/trending/tv/day?language=en-US',
@@ -15,9 +15,9 @@ export const useTrendingTv = defineStore('trendingTv', () => {
 
   axios
     .request(options)
-    .then((res) => trending.value.push(...res.data.results))
+    .then((res) => shows.value.push(...res.data.results))
 
     .catch((err) => console.log(err))
 
-  return { trending }
+  return { shows }
 })

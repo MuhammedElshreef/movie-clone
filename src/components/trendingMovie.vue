@@ -22,7 +22,7 @@ const trendingMovie = useTrendingMovie()
         :space-between="30"
         class="mySwiper"
       >
-        <swiper-slide v-for="movie in trendingMovie.trending" :key="movie.id">
+        <swiper-slide v-for="movie in trendingMovie.shows" :key="movie.id">
           <div class="flex flex-col gap-2">
             <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="" />
             <span class="truncate">{{ movie.title }} {{ movie.name }}</span>

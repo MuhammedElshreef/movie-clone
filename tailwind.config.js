@@ -12,6 +12,7 @@ module.exports = {
         default: '2rem'
       }
     },
+    safelist: ['animate-[fade-in-up_1s_ease-in-out]'],
     extend: {
       boxShadow: {
         custom: '7px 0px rgba(0,0,0, 0.2)'

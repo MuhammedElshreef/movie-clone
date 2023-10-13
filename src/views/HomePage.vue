@@ -4,11 +4,12 @@ import { useTrending } from '../stores/trending'
 import HeroBoard from '../components/HeroBoard.vue'
 import trendingMovie from '../components/trendingMovie.vue'
 import TrendingTv from '../components/TrendingTv.vue'
+import Footer from '../components/Footer.vue'
 const trending = useTrending()
 const randomTrendingMovie = ref()
-const random = Math.floor(Math.random() * trending.items.length)
+const random = Math.floor(Math.random() * trending.shows.length)
 setTimeout(() => {
-  randomTrendingMovie.value = trending.items[random]
+  randomTrendingMovie.value = trending.shows[random]
   console.log(randomTrendingMovie.value)
 }, 100)
 </script>
@@ -29,14 +30,6 @@ setTimeout(() => {
     </div>
     <trendingMovie />
     <TrendingTv />
-    <div class="container py-12 flex flex-col gap-2">
-      <h2>© 2023 All rights reserved.</h2>
-      <h2>
-        Designed by Jason Ujma-Alvis built by me, data provided by
-        <a href="https://www.themoviedb.org/" target="_blank" class="text-[#1E89DE] underline"
-          >TMDb.</a
-        >
-      </h2>
-    </div>
+    <Footer />
   </div>
 </template>
