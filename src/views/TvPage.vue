@@ -20,7 +20,7 @@ const trending = useTrendingTv()
       </div>
     </div>
     <div>
-      <HeroBoard :show="trending.shows[4]" />
+      <HeroBoard :show="trending.shows[3]" />
     </div>
     <PopularTvShow />
     <CurrentlyAiring />
