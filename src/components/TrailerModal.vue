@@ -50,9 +50,8 @@ if (prop.showType == 'movie') {
     })
 }
 const videoPlayer = ref(null)
-const stop = () => {
+function test() {
   videoPlayer.value.pause()
-  videoPlayer.value.currentTime = 0
 }
 </script>
 <template>
@@ -96,7 +95,7 @@ const stop = () => {
               class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
               data-te-modal-dismiss
               aria-label="Close"
-              @click="stop"
+              @click="test"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
