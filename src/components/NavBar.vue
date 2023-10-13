@@ -8,11 +8,11 @@
         <img src="../assets/icons/homeIcon.svg" class="w-8" alt="" />
       </button>
     </router-link>
-    <router-link to="/movie">
+    <!-- <router-link to="/movie">
       <button>
         <img src="../assets/icons/movieIcon.svg" class="w-8" alt="" />
       </button>
-    </router-link>
+    </router-link> -->
     <router-link to="/tv">
       <button>
         <img src="../assets/icons/tvIcon.svg" class="w-8" alt="" />
