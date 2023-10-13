@@ -8,7 +8,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
 
 import { Navigation, FreeMode } from 'swiper/modules'
-import { usePopularMovie } from '../stores/PopularMovie'
+import { usePopularMovie } from '../stores/popularMovie'
 const popularMovie = usePopularMovie()
 </script>
 <template>
