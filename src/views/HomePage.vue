@@ -6,12 +6,6 @@ import trendingMovie from '../components/trendingMovie.vue'
 import TrendingTv from '../components/TrendingTv.vue'
 import Footer from '../components/Footer.vue'
 const trending = useTrending()
-const randomTrendingMovie = ref()
-const random = Math.floor(Math.random() * trending.shows.length)
-setTimeout(() => {
-  randomTrendingMovie.value = trending.shows[random]
-  console.log(randomTrendingMovie.value)
-}, 100)
 </script>
 <template>
   <div class="lg:pl-[5rem] flex flex-col">
@@ -26,7 +20,7 @@ setTimeout(() => {
       </div>
     </div>
     <div>
-      <HeroBoard :show="randomTrendingMovie" />
+      <HeroBoard :show="trending.shows[0]" />
     </div>
     <trendingMovie />
     <TrendingTv />

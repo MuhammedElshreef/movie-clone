@@ -1,13 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
 import TrailerModal from './TrailerModal.vue'
 import RatingStars from './RatingStars.vue'
-import { Animate, initTE } from 'tw-elements'
 const props = defineProps({
   show: Array
-})
-onMounted(() => {
-  initTE({ Animate })
 })
 </script>
 
