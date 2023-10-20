@@ -9,7 +9,8 @@ module.exports = {
     container: {
       center: true,
       padding: {
-        default: '2rem'
+        lg: '2rem',
+        sm:'1rem'
       }
     },
     safelist: ['animate-[fade-in-up_1s_ease-in-out]'],

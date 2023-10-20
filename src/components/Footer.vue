@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup></script>
 <template>
-  <div class="container py-12 flex flex-col gap-2">
+  <div class="container lg:py-12 pt-10 pb-16 flex flex-col gap-2">
     <h2>© 2023 All rights reserved.</h2>
     <h2>
       Designed by Jason Ujma-Alvis built by me, data provided by

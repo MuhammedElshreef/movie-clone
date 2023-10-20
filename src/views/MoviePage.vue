@@ -1,12 +1,15 @@
 <script setup>
-import { useTrendingMovie } from '../stores/trendingMovie'
+import MoblieHero from '../components/MoblieHero.vue'
+
 import HeroBoard from '../components/HeroBoard.vue'
 import PopularMovie from '../components/PopularMovies.vue'
 import TopRatedMovies from '../components/TopRatedMovies.vue'
 import Footer from '../components/Footer.vue'
 import UpComing from '../components/UpcomingMovies.vue'
 import NowPlayingMovies from '../components/NowPlayingMovies.vue'
+import { useTrendingMovie } from '../stores/trendingMovie'
 const trending = useTrendingMovie()
+console.log(trending.shows)
 </script>
 <template>
   <div class="lg:pl-[5rem] flex flex-col">
@@ -22,6 +25,7 @@ const trending = useTrendingMovie()
     </div>
     <div>
       <HeroBoard :show="trending.shows[4]" />
+      <MoblieHero :show="trending.shows[4]" class="lg:hidden" />
     </div>
     <PopularMovie />
     <TopRatedMovies />

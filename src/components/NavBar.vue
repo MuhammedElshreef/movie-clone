@@ -4,7 +4,7 @@ const activeButton = ref(1)
 </script>
 <template>
   <div
-    class="fixed bg-[#141414] min-h-screen w-20 border-r-[0.1px] border-gray-500 flex flex-col items-center pt-9 gap-16"
+    class="  fixed bottom-0 bg-[#141414] lg:min-h-screen lg:pt-9 py-2  lg:w-20 w-full lg:border-r-[0.1px] lg:border-t-0 border-t-[0.1px] border-gray-500 flex  lg:flex-col lg:items-center lg:justify-normal justify-around  lg:gap-16 z-50"
   >
     <router-link to="/">
       <button @click="activeButton = 1">

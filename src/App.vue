@@ -4,8 +4,8 @@ import NavBar from './components/NavBar.vue'
 // const movies = useStoreMovie()
 </script>
 <template>
-  <div class="bg-[#141414]">
-    <NavBar />
+  <div class="bg-[#141414] ">
+    <NavBar class=" " />
     <div class="min-h-screen">
       <router-view></router-view>
     </div>

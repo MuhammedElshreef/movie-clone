@@ -60,7 +60,7 @@ function test() {
       <!-- Button trigger vertically centered modal-->
       <button
         type="button"
-        class="inline-flex items-center gap-2 bg-[#2A2B2C] hover:opacity-70 rounded px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out"
+        class="lg:inline-flex hidden items-center gap-2 bg-[#2A2B2C] hover:opacity-70 rounded px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out"
         data-te-toggle="modal"
         data-te-target="#exampleModalCenter"
         data-te-ripple-init
@@ -69,6 +69,27 @@ function test() {
         <img src="../assets/icons/playIcon.svg" class="w-6" alt="" />
 
         Watch trailer
+      </button>
+      <button class="lg:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="0.5"
+          stroke="white"
+          class="w-16 h-16"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+          />
+        </svg>
       </button>
     </div>
 
@@ -84,10 +105,10 @@ function test() {
     >
       <div
         data-te-modal-dialog-ref
-        class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]"
+        class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center justify-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]"
       >
         <div
-          class="pointer-events-auto relative flex w-[1500px] flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-2xl outline-none dark:bg-transparent pb-12"
+          class="pointer-events-auto relative flex w-[1700px] flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-2xl outline-none dark:bg-transparent pb-12"
         >
           <div class="flex pb-6 justify-end rounded-t-md">
             <button
@@ -111,7 +132,7 @@ function test() {
           </div>
 
           <!--Modal body-->
-          <div class="aspect-w-16 aspect-h-9">
+          <div class="aspect-w-24">
             <iframe
               :src="trailer"
               width="640"
@@ -122,7 +143,6 @@ function test() {
               ref="videoPlayer"
             ></iframe>
           </div>
-
           <!--Modal footer-->
         </div>
       </div>

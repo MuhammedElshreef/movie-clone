@@ -1,48 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import RatingStars from './RatingStars.vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
-
-import 'swiper/css/navigation'
-import 'swiper/css/free-mode'
-
-import { Navigation, FreeMode } from 'swiper/modules'
+import DesktopCarousel from './DesktopCarousel.vue';
+import MobileCarousel from './MobileCarousel.vue';
 import { useAiringToday } from '../stores/airingTodayTv'
 const airingToday = useAiringToday()
 </script>
 <template>
-  <div class="container">
-    <h2 class="py-8 pl-2 text-3xl text-white">TV Shows Airing Today</h2>
-    <div>
-      <swiper
-        :navigation="true"
-        :modules="[Navigation, FreeMode]"
-        :slides-per-view="5"
-        :freeMode="true"
-        :space-between="30"
-        class="mySwiper"
-      >
-        <swiper-slide v-for="movie in airingToday.shows" :key="movie.id">
-          <div class="flex flex-col gap-2">
-            <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="" />
-            <span class="truncate">{{ movie.title }} {{ movie.name }}</span>
-            <div class="flex gap-4">
-              <RatingStars :rating="movie.vote_average" />
-              <span class="text-gray-500 pt-1">{{ movie.vote_average }}</span>
-            </div>
-          </div>
-        </swiper-slide>
-      </swiper>
-    </div>
+  <div >
+    <h2 class="py-8 pl-[1rem] lg:pl-[2rem] lg:text-3xl text-xl text-white">TV Shows Airing Today</h2>
+    <DesktopCarousel :show="airingToday.shows" class="hidden lg:block"/>  
+    <MobileCarousel :show="airingToday.shows" class="lg:hidden"/>  
   </div>
 </template>
-
-<style>
-.swiper-button-prev {
-  color: white;
-}
-.swiper-button-next {
-  color: white;
-}
-</style>

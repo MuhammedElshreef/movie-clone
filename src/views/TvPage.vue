@@ -1,4 +1,5 @@
 <script setup>
+import MoblieHero from '../components/MoblieHero.vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import Footer from '../components/Footer.vue'
 import PopularTvShow from '../components/PopularTvShow.vue'
@@ -21,6 +22,7 @@ const trending = useTrendingTv()
     </div>
     <div>
       <HeroBoard :show="trending.shows[3]" />
+      <MoblieHero :show="trending.shows[3]" class="lg:hidden" />
     </div>
     <PopularTvShow />
     <CurrentlyAiring />

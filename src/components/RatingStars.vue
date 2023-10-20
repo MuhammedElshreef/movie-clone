@@ -7,8 +7,7 @@ const prop = defineProps({
 onMounted(() => {
   initTE({ Rating })
 })
-const test = ref(prop.rating / 2)
-console.log(test.value)
+const rate = ref(prop.rating / 2)
 </script>
 <template>
   <div>
@@ -17,7 +16,7 @@ console.log(test.value)
       data-te-rating-init
       data-te-active="fill-[#2391FF] text-[#2391FF]"
       data-te-readonly="true"
-      :data-te-value="test"
+      :data-te-value="rate"
     >
       <li>
         <span class="text-primary [&>svg]:h-5 [&>svg]:w-5" data-te-rating-icon-ref>
