@@ -14,6 +14,7 @@ defineProps({
 console.log()
 </script>
 <template>
+  <!-- you have to make a loading for the images in the carousel -->
   <div class="pl-[2rem]">
     <div>
       <swiper

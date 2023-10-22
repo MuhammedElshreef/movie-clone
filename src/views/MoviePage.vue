@@ -21,7 +21,7 @@ onMounted(() => {
       internalInstance.appContext.config.globalProperties.$Progress.fail()
       ready.value = false
     }
-  }, 100)
+  }, 1000)
 })
 </script>
 <template>
