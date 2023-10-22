@@ -10,7 +10,7 @@ module.exports = {
       center: true,
       padding: {
         lg: '2rem',
-        sm:'1rem'
+        sm: '1rem'
       }
     },
     safelist: ['animate-[fade-in-up_1s_ease-in-out]'],

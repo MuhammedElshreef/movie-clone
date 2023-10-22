@@ -7,9 +7,8 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/HomePage.vue')
-
     },
-    
+
     {
       path: '/movie',
       name: 'movie',
@@ -28,7 +27,7 @@ const router = createRouter({
       name: 'search',
       component: () => import('../views/SearchPage.vue')
     },
-    
+
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
