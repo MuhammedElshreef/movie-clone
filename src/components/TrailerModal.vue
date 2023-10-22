@@ -49,10 +49,7 @@ if (prop.showType == 'movie') {
       console.error(error)
     })
 }
-const videoPlayer = ref(null)
-function test() {
-  videoPlayer.value.pause()
-}
+const isModalOpen = ref(false)
 </script>
 <template>
   <div>
@@ -61,16 +58,13 @@ function test() {
       <button
         type="button"
         class="lg:inline-flex hidden items-center gap-2 bg-[#2A2B2C] hover:opacity-70 rounded px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out"
-        data-te-toggle="modal"
-        data-te-target="#exampleModalCenter"
-        data-te-ripple-init
-        data-te-ripple-color="light"
+        @click="isModalOpen = true"
       >
         <img src="../assets/icons/playIcon.svg" class="w-6" alt="" />
 
         Watch trailer
       </button>
-      <button class="lg:hidden">
+      <button class="lg:hidden" @click="isModalOpen = true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -95,28 +89,26 @@ function test() {
 
     <!--Verically centered modal-->
     <div
-      data-te-modal-init
-      class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-black"
-      id="exampleModalCenter"
-      tabindex="-1"
+      v-if="isModalOpen"
+      class="fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-black"
       aria-labelledby="exampleModalCenterTitle"
       aria-modal="true"
       role="dialog"
+      @click.self="isModalOpen = false"
     >
       <div
         data-te-modal-dialog-ref
-        class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center justify-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]"
+        class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center justify-center transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]"
       >
         <div
-          class="pointer-events-auto relative flex w-[1700px] flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-2xl outline-none dark:bg-transparent pb-12"
+          class="pointer-events-auto relative flex items-center w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-2xl outline-none dark:bg-transparent"
         >
-          <div class="flex pb-6 justify-end rounded-t-md">
+          <div class="flex pb-6 justify-end rounded-t-md lg:w-[50rem] w-full pr-8 lg:pr-0">
             <button
               type="button"
               class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-              data-te-modal-dismiss
               aria-label="Close"
-              @click="test"
+              @click="isModalOpen = false"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -132,15 +124,13 @@ function test() {
           </div>
 
           <!--Modal body-->
-          <div class="aspect-w-24">
+          <div class="lg:h-[500px] lg:w-[50rem]">
             <iframe
               :src="trailer"
-              width="640"
-              height="360"
               frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture; "
               allowfullscreen
-              ref="videoPlayer"
+              class="w-full h-full"
             ></iframe>
           </div>
           <!--Modal footer-->
