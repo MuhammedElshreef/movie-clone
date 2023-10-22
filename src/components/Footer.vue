@@ -1,15 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup></script>
 <template>
-  <div class="pl-[2rem] lg:py-12 pt-10 pb-16 flex flex-col gap-2" v-motion-fade-visible-once>
-    <h2>© 2023 All rights reserved.</h2>
-    <h2>
+  <div
+    class="lg:pl-[2rem] px-[1rem] lg:py-12 pt-10 pb-16 flex flex-col gap-2"
+    v-motion-fade-visible-once
+  >
+    <h2 class="text-center lg:text-start">© 2023 All rights reserved.</h2>
+    <h2 class="text-sm text-center lg:text-start lg:text-base">
       Designed by Jason Ujma-Alvis built by me, data provided by
       <a href="https://www.themoviedb.org/" target="_blank" class="text-[#1E89DE] underline"
         >TMDb.</a
       >
     </h2>
-    <div class="flex gap-2">
+    <div class="flex justify-center lg:justify-start gap-2">
       <a href="https://www.facebook.com/muhammed.alsayed.94" target="_blank" class="w-10 h-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
