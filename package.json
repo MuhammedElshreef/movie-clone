@@ -10,16 +10,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@aacassandra/vue3-progressbar": "^1.0.3",
     "@headlessui/vue": "^1.7.16",
-    "@vueuse/motion": "^2.0.0",
     "axios": "^1.5.1",
     "daisyui": "^3.9.2",
     "pinia": "^2.1.6",
     "swiper": "^10.3.1",
     "tw-elements": "^1.0.0",
     "vue": "^3.3.4",
-    "vue-progressbar": "^0.7.5",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
