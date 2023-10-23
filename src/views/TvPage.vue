@@ -1,5 +1,6 @@
 <script setup>
 import { ref, getCurrentInstance, onMounted } from 'vue'
+import TopRatedShows from '../components/TopRatedShows.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import Footer from '../components/Footer.vue'
@@ -36,6 +37,7 @@ onMounted(() => {
       <PopularTvShow />
       <CurrentlyAiring />
       <AiringToday />
+      <TopRatedShows />
       <Footer />
     </div>
   </div>
