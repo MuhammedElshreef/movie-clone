@@ -23,7 +23,7 @@ watch(name, () => {
       <!-- fix the text when u write so much -->
       <input
         type="text"
-        class="w-full lg:h-24 h-16 px-10 bg-[#202124]"
+        class="w-full lg:h-24 h-16 px-10 bg-[#202124] text-gray-200"
         placeholder="Search for a movie, tv show  or person..."
         v-model="name"
       />
