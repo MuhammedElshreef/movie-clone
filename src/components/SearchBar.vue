@@ -6,10 +6,10 @@ const props = defineProps({
 })
 const route = useRoute()
 const router = useRouter()
-const name = ref(route.query.q)
+const name = ref()
+
 watch(name, () => {
   router.push({ path: '/search', query: { q: `${name.value}` } })
-  // here fix the back
   setTimeout(() => {
     if (route.query.q == '') {
       router.push({ path: `${props.prevRoute}` })

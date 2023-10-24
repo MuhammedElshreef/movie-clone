@@ -29,7 +29,7 @@ onMounted(() => {
     <div class="min-h-screen flex justify-center items-center" v-if="ready == false">
       <p class="lg:text-4xl text-2xl text-white">Failed to load data</p>
     </div>
-    <div class="lg:pl-[5rem]" v-if="ready == true">
+    <div class="lg:pl-[5rem]" v-if="ready == true" v-motion-fade>
       <div>
         <HeroBoard :show="trending.shows[3]" />
         <MoblieHero :show="trending.shows[3]" class="lg:hidden" />
