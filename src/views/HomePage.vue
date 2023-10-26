@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, getCurrentInstance, ref } from 'vue'
+import { watch, getCurrentInstance, ref, onMounted } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import trendingMovie from '../components/trendingMovie.vue'
@@ -10,16 +10,24 @@ const trending = useTrending()
 const internalInstance = getCurrentInstance()
 internalInstance.appContext.config.globalProperties.$Progress.start()
 const ready = ref(null)
+
 onMounted(() => {
-  setTimeout(() => {
-    if (trending.shows.length >= 1) {
+  if (trending.shows.length >= 1) {
+    ready.value = true
+    setTimeout(() => {
       internalInstance.appContext.config.globalProperties.$Progress.finish()
-      ready.value = true
-    } else {
-      internalInstance.appContext.config.globalProperties.$Progress.fail()
-      ready.value = false
-    }
-  }, 1000)
+    }, 100)
+  } else {
+    watch(trending.shows, () => {
+      if (trending.shows.length >= 1) {
+        internalInstance.appContext.config.globalProperties.$Progress.finish()
+        ready.value = true
+      } else {
+        internalInstance.appContext.config.globalProperties.$Progress.fail()
+        ready.value = false
+      }
+    })
+  }
 })
 </script>
 <template>

@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 import RatingStars from '../components/RatingStars.vue'
+
 import { useRoute } from 'vue-router'
 import { watch, ref } from 'vue'
 const route = useRoute()
@@ -68,7 +69,7 @@ watch(route, () => {
           <div v-else-if="show.media_type == 'person' && show.profile_path !== null">
             <img :src="`https://image.tmdb.org/t/p/w500/${show.profile_path}`" alt="" />
           </div>
-          <div v-else class="flex justify-center items-center h-full bg-[#202124]">
+          <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -86,7 +87,7 @@ watch(route, () => {
           </div>
 
           <span class="truncate text-xl lg:block hidden">{{ show.title }} {{ show.name }}</span>
-          <div class="hidden gap-4 lg:flex">
+          <div v-if="show.media_type != 'person'" class="hidden gap-4 lg:flex">
             <RatingStars :rating="show.vote_average" />
             <span class="text-gray-500 pt-1 text-lg">{{ show.vote_average / 2 }}</span>
           </div>

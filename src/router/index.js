@@ -27,7 +27,16 @@ const router = createRouter({
       name: 'search',
       component: () => import('../views/SearchPage.vue')
     },
-
+    {
+      path: '/tv/:id',
+      name: 'tvDetails',
+      component: () => import('../views/TvDetails.vue')
+    },
+    {
+      path: '/movie/:id',
+      name: 'movieDetails',
+      component: () => import('../views/MovieDetails.vue')
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',

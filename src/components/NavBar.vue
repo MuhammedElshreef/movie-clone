@@ -41,7 +41,7 @@ const lastRoute = ref(`/`)
           stroke="white"
           class="w-8 h-8"
           :class="{
-            'stroke-[#1E89DE]': route.name === 'movie',
+            'stroke-[#1E89DE]': route.name === 'movie' || route.name === 'movieDetails',
             'hover:stroke-slate-400': route.name !== 'movie'
           }"
           @click="(isSearchBarOpen = false), (lastRoute = '/movie')"
@@ -62,7 +62,7 @@ const lastRoute = ref(`/`)
           stroke="white"
           class="w-8 h-8"
           :class="{
-            'stroke-[#1E89DE]': route.name === 'tv',
+            'stroke-[#1E89DE]': route.name === 'tv' || route.name === 'tvDetails',
             'hover:stroke-slate-400': route.name !== 'tv'
           }"
           @click="(isSearchBarOpen = false), (lastRoute = '/tv')"
