@@ -1,12 +1,14 @@
 <script setup>
-import { getCurrentInstance, ref, onMounted } from 'vue'
+import { getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
-import TvOverView from '../components/TvOverView.vue'
-import CastersCarousel from '../components/CastersCarousel.vue'
-import RecommendationShows from '../components/RecommendationShows.vue'
+import RecommendationShows from '../components/recommendationshows.vue'
+import OverView from '../components/TvOverView.vue'
+import VideosPage from '../components/VideosPage.vue'
+import EpisodesPage from '../components/EpisodesPage.vue'
+import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -14,10 +16,10 @@ const internalInstance = getCurrentInstance()
 internalInstance.appContext.config.globalProperties.$Progress.start()
 const ready = ref(null)
 const show = ref([])
-onMounted(() => {
+function getData(id) {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/tv/${route.params.id}?language=en-US`,
+    url: `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -37,7 +39,23 @@ onMounted(() => {
       internalInstance.appContext.config.globalProperties.$Progress.fail()
       ready.value = false
     })
+}
+onMounted(() => {
+  getData(route.params.id)
 })
+watch(route, () => {
+  window.location.reload()
+})
+const activeTap = ref('OverView')
+const tabs = {
+  OverView,
+  VideosPage,
+  EpisodesPage,
+  PhotosPage
+}
+function toggleTaps(e) {
+  activeTap.value = e
+}
 </script>
 <template>
   <div>
@@ -49,13 +67,10 @@ onMounted(() => {
         <HeroBoard :show="show" class="hidden lg:block" />
         <MoblieHero :show="show" class="lg:hidden" />
       </div>
-      <DetailsNav />
-      <TvOverView :show="show" />
-      <ShowSocial />
-      
-      <CastersCarousel v-motion-fade-visible-once />
-
-      <RecommendationShows :showId="route.params.id" :show-type="'tv'" v-motion-fade-visible-once />
+      <DetailsNav @active-tap="toggleTaps" :type="'tv'" />
+      <component :is="tabs[activeTap]" :show="show"> </component>
+      <!-- <OverView :show="show" /> -->
+      <RecommendationShows :show-id="show.id" :show-type="'tv'" />
       <Footer />
     </div>
   </div>

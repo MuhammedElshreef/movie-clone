@@ -11,7 +11,7 @@ import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 const recommendedShows = ref([])
-const hasRecommendation = ref(true)
+const hasRecommendation = ref(false)
 const props = defineProps({
   showId: Number,
   showType: String
@@ -38,7 +38,7 @@ onMounted(() => {
       .request(options)
       .then(function (response) {
         recommendedShows.value = response.data.results
-        console.log(response.data.results)
+        if (recommendedShows.value.length >= 1) hasRecommendation.value = true
       })
       .catch(function (error) {
         console.error(error)
@@ -89,10 +89,27 @@ onMounted(() => {
             @click="pushRoute(recommended.media_type, recommended.id)"
           >
             <img
+              v-if="!recommendedShows.poster_path"
               :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
               class="w-full h-full transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
               alt=""
             />
+            <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#cbd5e1"
+                class="w-14 h-14"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+            </div>
             <span class="truncate lg:block hidden text-lg"> {{ recommended.name }}</span>
             <div class="flex gap-2">
               <RatingStars :rating="recommended.vote_average" />
@@ -116,10 +133,27 @@ onMounted(() => {
               @click="pushRoute(recommended.media_type, recommended.id)"
             >
               <img
+                v-if="!recommendedShows.poster_path"
                 :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
                 class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
                 alt=""
               />
+              <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#cbd5e1"
+                  class="w-14 h-14"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+              </div>
             </div>
           </swiper-slide>
         </swiper>

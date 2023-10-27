@@ -1,12 +1,14 @@
 <script setup>
-import { getCurrentInstance, ref, onMounted } from 'vue'
+import { getCurrentInstance, ref, onMounted, watch } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
-import MovieOverView from '../components/OverviewMovie.vue'
-import CastersCarousel from '../components/CastersCarousel.vue'
+import OverView from '../components/OverviewMovie.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
+import EpisodesPage from '../components/EpisodesPage.vue'
+import VideosPage from '../components/VideosPage.vue'
+import PhotosPage from '../components/photospage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -14,10 +16,10 @@ const internalInstance = getCurrentInstance()
 internalInstance.appContext.config.globalProperties.$Progress.start()
 const ready = ref(null)
 const show = ref([])
-onMounted(() => {
+function getData(id) {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${route.params.id}?language=en-US`,
+    url: `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -31,14 +33,30 @@ onMounted(() => {
       show.value = res.data
       internalInstance.appContext.config.globalProperties.$Progress.finish()
       ready.value = true
-      console.log(res.data)
+      console.log(res.data.episodes)
     })
     .catch(function (error) {
       console.error(error)
       internalInstance.appContext.config.globalProperties.$Progress.fail()
       ready.value = false
     })
+}
+onMounted(() => {
+  getData(route.params.id)
 })
+watch(route, () => {
+  window.location.reload()
+})
+const activeTap = ref('OverView')
+const tabs = {
+  OverView,
+  VideosPage,
+  EpisodesPage,
+  PhotosPage
+}
+function toggleTaps(e) {
+  activeTap.value = e
+}
 </script>
 <template>
   <div>
@@ -50,12 +68,10 @@ onMounted(() => {
         <HeroBoard :show="show" class="hidden lg:block" />
         <MoblieHero :show="show" class="lg:hidden" />
       </div>
-      <DetailsNav />
-      <MovieOverView :show="show" />
-
-      <CastersCarousel v-motion-fade-visible-once />
-
-      <RecommendationShows :showId="route.params.id" v-motion-fade-visible-once />
+      <DetailsNav @active-tap="toggleTaps" :type="'movie'" />
+      <component :is="tabs[activeTap]" :show="show" :type="'movie'"> </component>
+      <!-- <OverView :show="show" /> -->
+      <RecommendationShows :show-id="show.id" :show-type="'movie'" />
       <Footer />
     </div>
   </div>

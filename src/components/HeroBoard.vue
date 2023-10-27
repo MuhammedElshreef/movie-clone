@@ -16,7 +16,6 @@ function toggleModal(e) {
 const haveTrailer = ref(false)
 onMounted(() => {
   if (props.show.media_type == 'movie' || route.path == '/movie') {
-    console.log(props.show.id)
     const options = {
       method: 'GET',
       url: `https://api.themoviedb.org/3/movie/${props.show.id}/videos?language=en-US`,
