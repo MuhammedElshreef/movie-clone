@@ -8,7 +8,7 @@ import OverView from '../components/OverviewMovie.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
 import EpisodesPage from '../components/EpisodesPage.vue'
 import VideosPage from '../components/VideosPage.vue'
-import PhotosPage from '../components/photospage.vue'
+import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
