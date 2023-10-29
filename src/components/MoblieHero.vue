@@ -97,6 +97,7 @@ onMounted(() => {
         :src="`https://image.tmdb.org/t/p/w500${props.show.backdrop_path}`"
         class="w-full h-full"
         alt=""
+        loading="lazy"
       />
     </div>
     <div class="bg-black text-white flex flex-col justify-center">

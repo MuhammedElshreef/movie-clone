@@ -1,10 +1,13 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import SearchBar from './SearchBar.vue'
 const isSearchBarOpen = ref(false)
 const route = useRoute()
 const lastRoute = ref(`/`)
+watch(route, () => {
+  if (route.path != 'search') isSearchBarOpen.value = false
+})
 </script>
 <template>
   <div>

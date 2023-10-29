@@ -1,10 +1,10 @@
 <script setup>
-import { getCurrentInstance, ref, onMounted, watch } from 'vue'
+import { getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
-import RecommendationShows from '../components/RecommendationShows.vue'
+import RecommendationShows from '../components/recommendationshows.vue'
 import OverView from '../components/TvOverView.vue'
 import VideosPage from '../components/VideosPage.vue'
 import EpisodesPage from '../components/EpisodesPage.vue'
