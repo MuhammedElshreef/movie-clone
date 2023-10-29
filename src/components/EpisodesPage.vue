@@ -43,7 +43,12 @@ onMounted(() => {
         class="w-36 h-8 px-2"
         v-if="props.show.number_of_seasons > 1"
       >
-        <option v-for="i in props.show.number_of_seasons" :key="i" :value="i">
+        <option
+          v-for="(i, index) in props.show.number_of_seasons"
+          :key="i"
+          :value="i"
+          :selected="index === 1"
+        >
           season {{ i }}
         </option>
       </select>

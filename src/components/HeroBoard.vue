@@ -103,7 +103,6 @@ onMounted(() => {
       :link="trailerLink"
       v-if="isModalOpen == true"
       @close-modal="toggleModal"
-      
     />
   </div>
 </template>

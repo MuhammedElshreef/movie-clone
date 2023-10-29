@@ -135,7 +135,7 @@ onMounted(() => {
               <img
                 v-if="!recommendedShows.poster_path"
                 :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
-                class=" transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
                 alt=""
               />
               <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">

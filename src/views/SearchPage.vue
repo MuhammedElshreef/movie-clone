@@ -2,21 +2,33 @@
 import axios from 'axios'
 import RatingStars from '../components/RatingStars.vue'
 
-import { useRoute, useRouter } from 'vue-router'
-import { watch, onMounted, ref } from 'vue'
-const router = useRouter()
+import { useRoute } from 'vue-router'
+import { watch, ref } from 'vue'
 const route = useRoute()
 const shows = ref([])
 const totalPages = ref()
-const currentPage = ref(1)
-const isLoading = ref()
-onMounted(() => {
-  getData(route.query.q, currentPage.value)
-})
-function getData(id, page) {
+const options = {
+  method: 'GET',
+  url: `https://api.themoviedb.org/3/search/multi?query=${route.query.q}&include_adult=false&language=en-US&page=1`,
+  headers: {
+    accept: 'application/json',
+    Authorization:
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
+  }
+}
+
+axios
+  .request(options)
+  .then((res) => {
+    ;(shows.value = res.data.results), (totalPages.value = res.data.total_pages)
+  })
+  .catch(function (error) {
+    console.error(error)
+  })
+watch(route, () => {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/search/multi?query=${id}&include_adult=false&language=en-US&page=${page}`,
+    url: `https://api.themoviedb.org/3/search/multi?query=${route.query.q}&include_adult=false&language=en-US&page=1`,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -27,56 +39,21 @@ function getData(id, page) {
   axios
     .request(options)
     .then((res) => {
-      if (currentPage.value == 1) {
-        ;(shows.value = res.data.results), (totalPages.value = res.data.total_pages)
-        isLoading.value = false
-      } else if (currentPage.value >= 1) {
-        shows.value.push(...res.data.results)
-        isLoading.value = false
-      }
+      ;(shows.value = res.data.results),
+        (totalPages.value = res.data.total_pages),
+        console.log(shows.value)
     })
     .catch(function (error) {
       console.error(error)
     })
-}
-watch(route, () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-  currentPage.value = 1
-  getData(route.query.q, currentPage.value)
-  isLoading.value = false
-})
-function getDetails(type, id) {
-  router.push({ path: `/${type}/${id}` })
-}
-
-window.addEventListener('scroll', () => {
-  setTimeout(() => {
-    if (window.scrollY.toFixed() >= document.getElementById('test').clientHeight - 900) {
-      if (totalPages.value != currentPage.value) {
-        isLoading.value = true
-        currentPage.value += 1
-        getData(route.query.q, currentPage.value)
-      }
-    }
-  }, 2000)
 })
 </script>
 <template>
-  <div class="min-h-screen lg:pl-[8rem] pt-[8rem] lg:text-4xl text-2xl text-gray-200" id="test">
+  <div class="min-h-screen lg:pl-[8rem] pt-[8rem] lg:text-4xl text-2xl text-gray-200">
     <div class="flex flex-col lg:pr-[4rem] px-2">
       <p class="">Results For: {{ route.query.q }}</p>
-
       <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16">
-        <div
-          class="flex flex-col gap-2 group hover:cursor-pointer"
-          v-for="show in shows"
-          :key="show.id"
-          @click="getDetails(show.media_type, show.id)"
-          v-motion-fade
-        >
+        <div class="flex flex-col gap-2 h-full" v-for="show in shows" :key="show.id">
           <div
             v-if="
               (show.media_type == 'movie' && show.poster_path !== null) ||
@@ -85,21 +62,14 @@ window.addEventListener('scroll', () => {
           >
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+              class="lg:w-[276px] lg:h-[414px]"
               alt=""
             />
           </div>
           <div v-else-if="show.media_type == 'person' && show.profile_path !== null">
-            <img
-              :src="`https://image.tmdb.org/t/p/w500/${show.profile_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt=""
-            />
+            <img :src="`https://image.tmdb.org/t/p/w500/${show.profile_path}`" alt="" />
           </div>
-          <div
-            v-else
-            class="flex justify-center items-center lg:h-[372px] h-[171px] bg-[#202124] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-          >
+          <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -122,24 +92,6 @@ window.addEventListener('scroll', () => {
             <span class="text-gray-500 pt-1 text-lg">{{ show.vote_average / 2 }}</span>
           </div>
         </div>
-      </div>
-      <div role="status" class="flex justify-center items-center h-36" v-if="isLoading">
-        <svg
-          aria-hidden="true"
-          class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-          viewBox="0 0 100 101"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="currentColor"
-          />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="currentFill"
-          />
-        </svg>
       </div>
     </div>
   </div>
