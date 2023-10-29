@@ -5,17 +5,21 @@ import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
 
 import { Navigation, FreeMode } from 'swiper/modules'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 const route = useRoute()
+const router = useRouter()
 const hasCasters = ref(false)
 const casters = ref([])
-onMounted(() => {
+function getDetails(id) {
+  router.push({ path: `/person/${id}` })
+}
+function getData(id) {
   if (route.name == 'tvDetails') {
     const options = {
       method: 'GET',
-      url: `https://api.themoviedb.org/3/tv/${route.params.id}/credits?language=en-US`,
+      url: `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`,
       headers: {
         accept: 'application/json',
         Authorization:
@@ -35,7 +39,7 @@ onMounted(() => {
   } else if (route.name == 'movieDetails') {
     const options = {
       method: 'GET',
-      url: `https://api.themoviedb.org/3/movie/${route.params.id}/credits?language=en-US`,
+      url: `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
       headers: {
         accept: 'application/json',
         Authorization:
@@ -55,6 +59,9 @@ onMounted(() => {
         console.error(error)
       })
   }
+}
+onMounted(() => {
+  getData(route.params.id)
 })
 </script>
 <template>
@@ -73,7 +80,10 @@ onMounted(() => {
         class="mySwiper"
       >
         <swiper-slide v-for="caster in casters" :key="caster.id" class="px-3">
-          <div class="flex flex-col gap-2 group hover:cursor-pointer">
+          <div
+            class="flex flex-col gap-2 group hover:cursor-pointer"
+            @click="getDetails(caster.id)"
+          >
             <img
               v-if="caster.profile_path !== null"
               :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
@@ -112,7 +122,10 @@ onMounted(() => {
 
         <swiper :modules="[FreeMode]" :slides-per-view="3" :freeMode="true" class="mySwiper">
           <swiper-slide v-for="caster in casters" :key="caster.id" class="px-3">
-            <div class="flex flex-col gap-2 group hover:cursor-pointer">
+            <div
+              class="flex flex-col gap-2 group hover:cursor-pointer"
+              @click="getDetails(caster.id)"
+            >
               <img
                 v-if="caster.profile_path !== null"
                 :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"

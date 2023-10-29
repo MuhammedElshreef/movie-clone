@@ -10,11 +10,10 @@ const props = defineProps({
 })
 const route = useRoute()
 const showSocial = ref([])
-
-onMounted(() => {
+function getData(id) {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${route.params.id}?language=en-US`,
+    url: `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -26,12 +25,13 @@ onMounted(() => {
     .request(options)
     .then(function (response) {
       showSocial.value = response.data
-      console.log(showSocial.value)
     })
     .catch(function (error) {
       console.error(error)
     })
-  console.log(props.show)
+}
+onMounted(() => {
+  getData(route.params.id)
 })
 </script>
 <template>
