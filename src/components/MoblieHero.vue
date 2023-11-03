@@ -16,7 +16,6 @@ function toggleModal(e) {
 onMounted(() => {
   setTimeout(() => {
     if (props.show.media_type == 'movie' || route.path == '/movie') {
-      console.log(props.show.id)
       const options = {
         method: 'GET',
         url: `https://api.themoviedb.org/3/movie/${props.show.id}/videos?language=en-US`,
@@ -96,7 +95,7 @@ onMounted(() => {
       <img
         :src="`https://image.tmdb.org/t/p/w500${props.show.backdrop_path}`"
         class="w-full h-full"
-        alt=""
+        alt="show backdrop image "
         loading="lazy"
       />
     </div>

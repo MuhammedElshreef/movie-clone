@@ -26,7 +26,7 @@ defineProps({
     >
       EPISODES
     </button>
-    <button
+    <!-- <button
       class="lg:text-lg text-sm hover:text-white"
       :class="{
         'text-white underline lg:text-2xl underline-offset-[12px]': activeButton == 3
@@ -34,7 +34,7 @@ defineProps({
       @click="(activeButton = 3), $emit('activeTap', 'VideosPage')"
     >
       VIDEOS
-    </button>
+    </button> -->
     <button
       class="lg:text-lg text-sm hover:text-white"
       :class="{

@@ -92,7 +92,7 @@ onMounted(() => {
               v-if="!recommendedShows.poster_path"
               :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
               class="w-full h-full transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt=""
+              alt="recommended poster image"
             />
             <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
               <svg
@@ -136,7 +136,7 @@ onMounted(() => {
                 v-if="!recommendedShows.poster_path"
                 :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
                 class=" transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-                alt=""
+                alt="image for the not found poster for the recommended"
               />
               <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
                 <svg

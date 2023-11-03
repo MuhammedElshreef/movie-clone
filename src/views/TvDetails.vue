@@ -6,7 +6,7 @@ import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
 import OverView from '../components/TvOverView.vue'
-import VideosPage from '../components/VideosPage.vue'
+// import VideosPage from '../components/VideosPage.vue'
 import EpisodesPage from '../components/EpisodesPage.vue'
 import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
@@ -49,7 +49,7 @@ watch(route, () => {
 const activeTap = ref('OverView')
 const tabs = {
   OverView,
-  VideosPage,
+  // VideosPage,
   EpisodesPage,
   PhotosPage
 }

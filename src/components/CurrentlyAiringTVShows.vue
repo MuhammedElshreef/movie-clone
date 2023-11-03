@@ -11,7 +11,17 @@ const currentlyAiring = useCurrentlyAiring()
       Currently Airing TV Shows
     </h2>
 
-    <DesktopCarousel :show="currentlyAiring.shows" class="hidden lg:block" />
-    <MobileCarousel :show="currentlyAiring.shows" class="lg:hidden" />
+    <DesktopCarousel
+      :show="currentlyAiring.shows"
+      class="hidden lg:block"
+      :type="'tv'"
+      :category="'currentlyAiring'"
+    />
+    <MobileCarousel
+      :show="currentlyAiring.shows"
+      class="lg:hidden"
+      :type="'tv'"
+      :category="'currentlyAiring'"
+    />
   </div>
 </template>

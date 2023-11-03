@@ -41,7 +41,7 @@ onMounted(() => {
       <img
         :src="`https://image.tmdb.org/t/p/w500${props.show.poster_path}`"
         class="h-[403px] w-[268px] lg:block hidden"
-        alt=""
+        alt="show backdrop image"
       />
       <div class="flex flex-col gap-6 text-white">
         <span class="lg:text-3xl text-2xl">Storyline</span>

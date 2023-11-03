@@ -81,7 +81,7 @@ onMounted(() => {
           class="lg:inline-flex hidden items-center gap-2 bg-[#2A2B2C] hover:opacity-70 rounded px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out w-52"
           @click="isModalOpen = true"
         >
-          <img src="../assets/icons/playIcon.svg" class="w-6" alt="" />
+          <img src="../assets/icons/playIcon.svg" class="w-6" alt="play Icon for the trailer button" />
 
           Watch trailer
         </button>
@@ -95,7 +95,7 @@ onMounted(() => {
       <img
         :src="`https://image.tmdb.org/t/p/w500${props.show.backdrop_path}`"
         class="w-full h-full"
-        alt=""
+        alt="show backdrop"
       />
     </div>
     <TrailerModal

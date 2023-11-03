@@ -25,6 +25,6 @@ window.scrollTo({
     <PersonOverview />
     <PersonNav @active-tap="toggleTaps" />
     <component :is="taps[activeTap]"></component>
-    <Footer />
+    <Footer class="container" />
   </div>
 </template>

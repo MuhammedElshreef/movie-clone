@@ -27,7 +27,7 @@ function details(type, id) {
       <img
         :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
         class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-        alt=""
+        alt="poster image"
       />
       <span class="truncate lg:block hidden">{{ show.title }} {{ show.name }}</span>
       <div class="lg:flex gap-4 hidden">

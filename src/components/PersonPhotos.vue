@@ -32,7 +32,7 @@ onMounted(() => {
   <div class="container grid lg:grid-cols-5 gap-2" v-motion-fade>
     <div v-for="(photo, index) in photos" :key="index">
       <div>
-        <img :src="`https://image.tmdb.org/t/p/w500${photo.file_path}`" alt="" loading="lazy" />
+        <img :src="`https://image.tmdb.org/t/p/w500${photo.file_path}`" alt="photos of the selected person" loading="lazy" />
       </div>
     </div>
   </div>

@@ -62,7 +62,7 @@ onMounted(() => {
     <img
       :src="`https://image.tmdb.org/t/p/w500${details.profile_path}`"
       class="h-[403px] w-[268px]"
-      alt=""
+      alt="image of the selected person"
     />
     <div class="flex flex-col gap-8 text-white">
       <div class="flex flex-col gap-4 lg:text-start text-center">
@@ -89,13 +89,13 @@ onMounted(() => {
           <span class="w-36">Place Of Birth</span>
           <span>{{ details.place_of_birth }}</span>
         </div>
-        <div class="flex gap-2" v-if="details.birthday">
+        <div class="flex gap-2" v-if="details.deathday">
           <span class="w-36">Died</span>
           <div class="flex gap-2">
             <span>{{ details.deathday }} </span>
             <span v-if="details.deathday">
               (aged
-              {{ currentYear - +details.birthday.substring(0, 4) }})
+              {{ +details.deathday.substring(0, 4) - +details.birthday.substring(0, 4) }})
             </span>
           </div>
         </div>

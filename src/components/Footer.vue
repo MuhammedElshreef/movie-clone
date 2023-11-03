@@ -2,7 +2,7 @@
 <script setup></script>
 <template>
   <div
-    class="lg:pl-[2rem] px-[1rem] lg:py-12 pt-10 pb-16 flex flex-col gap-2 text-gray-200"
+    class="lg:pl-[1rem] px-[2rem] lg:py-12 pt-10 pb-16 flex flex-col gap-2 text-gray-200"
     v-motion-fade-visible-once
   >
     <h2 class="text-center lg:text-start">© 2023 All rights reserved.</h2>

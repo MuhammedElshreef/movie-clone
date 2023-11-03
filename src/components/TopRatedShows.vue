@@ -8,7 +8,9 @@ const topRatedShows = useTopRatedShows()
   <div v-motion-fade>
     <h2 class="py-8 pl-[1rem] lg:pl-[2rem] lg:text-3xl text-xl text-white">Top Rated TV Shows</h2>
 
-    <DesktopCarousel :show="topRatedShows.shows" class="hidden lg:block" />
-    <MobileCarousel :show="topRatedShows.shows" class="lg:hidden" />
+    <DesktopCarousel :show="topRatedShows.shows" class="hidden lg:block" :type="'tv'"
+      :category="'topRated'"/>
+    <MobileCarousel :show="topRatedShows.shows" class="lg:hidden" :type="'tv'"
+      :category="'topRated'"/>
   </div>
 </template>

@@ -1,12 +1,23 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import SearchBar from './SearchBar.vue'
+const router = useRouter()
 const isSearchBarOpen = ref(false)
 const route = useRoute()
 const lastRoute = ref(`/`)
+const firstPath = ref()
 watch(route, () => {
-  if (route.path != 'search') isSearchBarOpen.value = false
+  if (
+    (route.params.id != 0 && route.name == 'personDetails') ||
+    route.name == 'movieDetails' ||
+    route.name == 'tvDetails'
+  )
+    isSearchBarOpen.value = false
+})
+router.beforeEach((to, from, next) => {
+  firstPath.value = to.path.split('/')[1]
+  next()
 })
 </script>
 <template>
@@ -44,8 +55,8 @@ watch(route, () => {
           stroke="white"
           class="w-8 h-8"
           :class="{
-            'stroke-[#1E89DE]': route.name === 'movie' || route.name === 'movieDetails',
-            'hover:stroke-slate-400': route.name !== 'movie'
+            'stroke-[#1E89DE]': firstPath == 'movie',
+            'hover:stroke-slate-400': firstPath != 'movie'
           }"
           @click="(isSearchBarOpen = false), (lastRoute = '/movie')"
         >
@@ -65,8 +76,8 @@ watch(route, () => {
           stroke="white"
           class="w-8 h-8"
           :class="{
-            'stroke-[#1E89DE]': route.name === 'tv' || route.name === 'tvDetails',
-            'hover:stroke-slate-400': route.name !== 'tv'
+            'stroke-[#1E89DE]': firstPath == 'tv',
+            'hover:stroke-slate-400': firstPath != 'tv'
           }"
           @click="(isSearchBarOpen = false), (lastRoute = '/tv')"
         >

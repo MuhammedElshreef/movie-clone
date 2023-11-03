@@ -7,7 +7,7 @@ import DetailsNav from '../components/DetailsNav.vue'
 import OverView from '../components/OverviewMovie.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
 import EpisodesPage from '../components/EpisodesPage.vue'
-import VideosPage from '../components/VideosPage.vue'
+// import VideosPage from '../components/VideosPage.vue'
 import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
@@ -33,7 +33,6 @@ function getData(id) {
       show.value = res.data
       internalInstance.appContext.config.globalProperties.$Progress.finish()
       ready.value = true
-      console.log(res.data.episodes)
     })
     .catch(function (error) {
       console.error(error)
@@ -50,7 +49,7 @@ watch(route, () => {
 const activeTap = ref('OverView')
 const tabs = {
   OverView,
-  VideosPage,
+  // VideosPage,
   EpisodesPage,
   PhotosPage
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const props = defineProps({
   prevRoute: String
@@ -7,13 +7,18 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 const name = ref(route.query.q)
+const input = ref(null)
 watch(name, () => {
   router.push({ path: '/search', query: { q: `${name.value}` } })
   setTimeout(() => {
     if (route.query.q == '') {
       router.push({ path: `${props.prevRoute}` })
+      
     }
   }, 100)
+})
+onMounted(() => {
+  input.value.focus()
 })
 </script>
 <template>
@@ -22,12 +27,13 @@ watch(name, () => {
       <!-- fix the text when u write so much -->
       <input
         type="text"
+        ref="input"
         class="w-full lg:h-24 h-16 px-10 bg-[#202124] text-gray-200 focus:outline-none"
         placeholder="Search for a movie, tv show  or person..."
         v-model="name"
       />
       <button
-        class="absolute lg:top-9 top-4 right-8"
+        class="absolute lg:top-9 top-4 right-8 text-gray-300"
         @click="router.push({ path: `${props.prevRoute}` })"
         v-if="name"
       >

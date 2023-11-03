@@ -8,7 +8,9 @@ const upcomingMovies = useUpcomingMovies()
 <template>
   <div v-motion-fade-visible-once>
   <h2 class="py-8 pl-[1rem] lg:pl-[2rem] lg:text-3xl text-xl text-white">Upcoming Movies</h2>
-    <DesktopCarousel :show="upcomingMovies.shows" class="hidden lg:block"/>    
-    <MobileCarousel :show="upcomingMovies.shows" class="lg:hidden"/>
+    <DesktopCarousel :show="upcomingMovies.shows" class="hidden lg:block" :type="'movie'"
+      :category="'upcoming'"/>    
+    <MobileCarousel :show="upcomingMovies.shows" class="lg:hidden" :type="'movie'"
+      :category="'upcoming'" />
   </div>
 </template>

@@ -12,16 +12,18 @@ const trending = useTrendingTv()
 const internalInstance = getCurrentInstance()
 internalInstance.appContext.config.globalProperties.$Progress.start()
 const ready = ref(null)
+
 onMounted(() => {
   if (trending.shows.length >= 1) {
     ready.value = true
-    setTimeout(() => {
+    if (trending.shows.length >= 1) {
       internalInstance.appContext.config.globalProperties.$Progress.finish()
-    }, 100)
+    }
   } else {
     watch(trending.shows, () => {
       if (trending.shows.length >= 1) {
         internalInstance.appContext.config.globalProperties.$Progress.finish()
+
         ready.value = true
       } else {
         internalInstance.appContext.config.globalProperties.$Progress.fail()
@@ -42,9 +44,9 @@ onMounted(() => {
         <MoblieHero :show="trending.shows[3]" class="lg:hidden" />
       </div>
       <PopularTvShow />
+      <TopRatedShows />
       <CurrentlyAiring />
       <AiringToday />
-      <TopRatedShows />
       <Footer />
     </div>
   </div>

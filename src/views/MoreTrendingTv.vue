@@ -1,22 +1,17 @@
 <script setup>
-import axios from 'axios'
 import RatingStars from '../components/RatingStars.vue'
-
-import { useRoute, useRouter } from 'vue-router'
-import { watch, onMounted, ref } from 'vue'
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 const router = useRouter()
-const route = useRoute()
 const shows = ref([])
 const totalPages = ref()
 const currentPage = ref(1)
 const isLoading = ref()
-onMounted(() => {
-  getData(route.query.q, currentPage.value)
-})
-function getData(id, page) {
+function getData(page) {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/search/multi?query=${id}&include_adult=false&language=en-US&page=${page}`,
+    url: `https://api.themoviedb.org/3/trending/tv/day?language=en-US&page=${page}`,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -39,35 +34,28 @@ function getData(id, page) {
       console.error(error)
     })
 }
-watch(route, () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-  currentPage.value = 1
-  getData(route.query.q, currentPage.value)
-  isLoading.value = false
+onMounted(() => {
+  getData(currentPage.value)
 })
-function getDetails(type, id) {
-  router.push({ path: `/${type}/${id}` })
-}
-
 window.addEventListener('scroll', () => {
   setTimeout(() => {
     if (window.scrollY.toFixed() >= document.getElementById('test').clientHeight - 900) {
       if (totalPages.value != currentPage.value) {
         isLoading.value = true
         currentPage.value += 1
-        getData(route.query.q, currentPage.value)
+        getData(currentPage.value)
       }
     }
   }, 2000)
 })
+function getDetails(type, id) {
+  router.push({ path: `/${type}/${id}` })
+}
 </script>
 <template>
-  <div class="min-h-screen lg:pl-[8rem] pt-[8rem] lg:text-4xl text-2xl text-gray-200" id="test">
+  <div class="min-h-screen lg:pl-[8rem] pt-[2rem] lg:text-4xl text-2xl text-gray-200" id="test">
     <div class="flex flex-col lg:pr-[4rem] px-2">
-      <p class="">Results For: {{ route.query.q }}</p>
+      <p class="">Today's Trending Tv:</p>
 
       <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16">
         <div
@@ -77,23 +65,11 @@ window.addEventListener('scroll', () => {
           @click="getDetails(show.media_type, show.id)"
           v-motion-fade
         >
-          <div
-            v-if="
-              (show.media_type == 'movie' && show.poster_path !== null) ||
-              (show.media_type == 'tv' && show.poster_path !== null)
-            "
-          >
+          <div v-if="show.poster_path">
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
               class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt=" posters for the found shows"
-            />
-          </div>
-          <div v-else-if="show.media_type == 'person' && show.profile_path !== null">
-            <img
-              :src="`https://image.tmdb.org/t/p/w500/${show.profile_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt="profile photo for the found person"
+              alt="show poster"
             />
           </div>
           <div

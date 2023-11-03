@@ -8,6 +8,7 @@ import { Navigation, FreeMode } from 'swiper/modules'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+
 const route = useRoute()
 const router = useRouter()
 const hasCasters = ref(false)
@@ -88,7 +89,7 @@ onMounted(() => {
               v-if="caster.profile_path !== null"
               :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
               class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt=""
+              alt="caster's profile image"
             />
             <div v-else class="flex justify-center items-center h-[255.64px] bg-[#202124]">
               <svg
@@ -130,7 +131,7 @@ onMounted(() => {
                 v-if="caster.profile_path !== null"
                 :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
                 class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-                alt=""
+                alt="caster's profile image"
               />
               <div v-else class="flex justify-center items-center h-[151.5px] bg-[#202124]">
                 <svg

@@ -39,7 +39,7 @@ onMounted(() => {
       </div>
       <div class="grid lg:grid-cols-4 grid-cols-2 gap-2">
         <div v-for="(backdrop, index) in backDrops" :key="index">
-          <img :src="`https://image.tmdb.org/t/p/w500${backdrop.file_path}`" />
+          <img :src="`https://image.tmdb.org/t/p/w500${backdrop.file_path}`" alt="backdrops images"/>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ onMounted(() => {
           <img
             :src="`https://image.tmdb.org/t/p/w500${poster.file_path}`"
             class="h-[372px] w-[248px]"
-            alt=""
+            alt="posters images"
           />
         </div>
       </div>

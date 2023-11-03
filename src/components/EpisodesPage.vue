@@ -33,6 +33,7 @@ watch(selectedSeason, () => {
 })
 onMounted(() => {
   getData(props.show.id, 1)
+  console.log(episodes.value)
 })
 </script>
 <template>
@@ -41,13 +42,13 @@ onMounted(() => {
       <select
         v-model="selectedSeason"
         class="w-36 h-8 px-2"
-        v-if="props.show.number_of_seasons > 1"
+        v-if="props.show.number_of_seasons >= 1"
       >
         <option v-for="i in props.show.number_of_seasons" :key="i" :value="i">
           season {{ i }}
         </option>
       </select>
-      <span>{{ numberOfEp }} Episodes</span>
+      <span> {{ numberOfEp }} Episodes</span>
     </div>
     <div class="grid lg:grid-cols-4 gap-2" v-if="episodes.length >= 1" v-motion-fade>
       <div
@@ -57,7 +58,11 @@ onMounted(() => {
         :class="{ 'h-96 relative': ep.overview != '' }"
       >
         <div class="flex flex-col gap-4">
-          <img :src="`https://image.tmdb.org/t/p/w500${ep.still_path}`" class="w-[320px]" alt="" />
+          <img
+            :src="`https://image.tmdb.org/t/p/w500${ep.still_path}`"
+            class="w-[320px]"
+            alt="episode image"
+          />
           <div class="flex gap-2">
             <span class="text-blue-600">E{{ ep.episode_number }}</span>
             <p>{{ ep.name }}</p>

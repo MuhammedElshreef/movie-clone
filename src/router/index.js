@@ -43,6 +43,56 @@ const router = createRouter({
       component: () => import('../views/PersonDetails.vue')
     },
     {
+      path: '/movie/trending',
+      name: 'trendingMovies',
+      component: () => import('../views/MoreTrendingMovie.vue')
+    },
+    {
+      path: '/movie/Popular',
+      name: 'popularMovies',
+      component: () => import('../views/MorePopularMovies.vue')
+    },
+    {
+      path: '/movie/topRated',
+      name: 'topRatedMovies',
+      component: () => import('../views/MoreTopRatedMovies.vue')
+    },
+    {
+      path: '/movie/upcoming',
+      name: 'upcomingMovies',
+      component: () => import('../views/MoreUpcomingMovies.vue')
+    },
+    {
+      path: '/movie/nowPlaying',
+      name: 'nowPlayingMovies',
+      component: () => import('../views/MoreNowPlayingMovies.vue')
+    },
+    {
+      path: '/tv/trending',
+      name: 'trendingTv',
+      component: () => import('../views/MoreTrendingTv.vue')
+    },
+    {
+      path: '/tv/popular',
+      name: 'PopularTv',
+      component: () => import('../views/MorePopularTv.vue')
+    },
+    {
+      path: '/tv/currentlyAiring',
+      name: 'currentlyAiringTv',
+      component: () => import('../views/MoreCurrentlyPlayingTv.vue')
+    },
+    {
+      path: '/tv/topRated',
+      name: 'topRatedTv',
+      component: () => import('../views/MoreTopRatedTv.vue')
+    },
+    {
+      path: '/tv/airingToday',
+      name: 'airingTodayTv',
+      component: () => import('../views/MoreAiringTodayTv.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('../views/NotFoundPage.vue')
