@@ -36,13 +36,13 @@ onMounted(() => {
       <p class=";g:text-4xl text-2xl text-white">Failed to load data</p>
     </div>
     <div class="lg:pl-[5rem]" v-if="ready == true" v-motion-fade>
-      <div>
+      <div v-once>
         <HeroBoard :show="trending.shows[0]" class="hidden lg:block" />
         <MoblieHero :show="trending.shows[0]" class="lg:hidden" />
       </div>
-      <trendingMovie />
-      <TrendingTv />
-      <Footer />
+      <trendingMovie v-once />
+      <TrendingTv v-once />
+      <Footer v-once />
     </div>
   </div>
 </template>

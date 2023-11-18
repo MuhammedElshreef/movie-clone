@@ -13,6 +13,7 @@ const isModalOpen = ref(false)
 function toggleModal(e) {
   isModalOpen.value = e
 }
+
 const haveTrailer = ref(false)
 onMounted(() => {
   if (props.show.media_type == 'movie' || route.path == '/movie') {
@@ -28,9 +29,9 @@ onMounted(() => {
     axios
       .request(options)
       .then((res) => {
-        if (res.data.results[0]) {
+        if (res.data.results) {
           ;(haveTrailer.value = true),
-            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`)
+            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[0].key}`)
         }
       })
 
@@ -50,9 +51,9 @@ onMounted(() => {
     axios
       .request(options)
       .then((res) => {
-        if (res.data.results[0]) {
+        if (res.data.results) {
           ;(haveTrailer.value = true),
-            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`)
+            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[4].key}`)
         }
       })
       .catch(function (error) {
@@ -70,8 +71,13 @@ onMounted(() => {
         <div class="flex gap-6">
           <RatingStars :rating="props.show.vote_average" />
           <span class="text-gray-500 pt-1">{{ props.show.vote_count }} reviews</span>
-          <span class="text-gray-500 pt-1">{{ props.show.release_date }}</span>
+          <span class="text-gray-500 pt-1" v-if="props.show.release_date">{{
+            props.show.release_date
+          }}</span>
           <span class="text-gray-500 pt-1">{{ props.show.original_language }} </span>
+          <span class="text-gray-500 pt-1" v-if="props.show.first_air_date"
+            >{{ props.show.first_air_date }}
+          </span>
         </div>
         <p class="text-base">{{ props.show.overview }}</p>
         <!-- <TrailerModal :showId="props.show.id" :showType="props.show.media_type" /> -->
@@ -81,7 +87,11 @@ onMounted(() => {
           class="lg:inline-flex hidden items-center gap-2 bg-[#2A2B2C] hover:opacity-70 rounded px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out w-52"
           @click="isModalOpen = true"
         >
-          <img src="../assets/icons/playIcon.svg" class="w-6" alt="play Icon for the trailer button" />
+          <img
+            src="../assets/icons/playIcon.svg"
+            class="w-6"
+            alt="play Icon for the trailer button"
+          />
 
           Watch trailer
         </button>
@@ -92,18 +102,14 @@ onMounted(() => {
         class="absolute w-full h-full"
         style="background-image: linear-gradient(90deg, #000 0, transparent 50%, transparent)"
       ></div>
-      <img
-        :src="`https://image.tmdb.org/t/p/w500${props.show.backdrop_path}`"
-        class="w-full h-full"
-        alt="show backdrop"
-      />
+      <div class="lg:w-[815px] lg:h-[458px]">
+        <img
+          :src="`https://image.tmdb.org/t/p/w500${props.show.backdrop_path}`"
+          class="w-full h-full"
+          alt="show backdrop"
+        />
+      </div>
     </div>
-    <TrailerModal
-      :isModalOpen="isModalOpen"
-      :link="trailerLink"
-      v-if="isModalOpen == true"
-      @close-modal="toggleModal"
-      
-    />
+    <TrailerModal :isModalOpen="isModalOpen" :link="trailerLink" @close-modal="toggleModal" />
   </div>
 </template>

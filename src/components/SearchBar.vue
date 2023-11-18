@@ -9,13 +9,8 @@ const router = useRouter()
 const name = ref(route.query.q)
 const input = ref(null)
 watch(name, () => {
-  router.push({ path: '/search', query: { q: `${name.value}` } })
-  setTimeout(() => {
-    if (route.query.q == '') {
-      router.push({ path: `${props.prevRoute}` })
-      
-    }
-  }, 100)
+  router.replace({ path: '/search', query: { q: `${name.value}` } })
+  if (!name.value) router.push({ path: `${props.prevRoute}` })
 })
 onMounted(() => {
   input.value.focus()

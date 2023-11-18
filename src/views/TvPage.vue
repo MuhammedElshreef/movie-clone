@@ -39,15 +39,15 @@ onMounted(() => {
       <p class="lg:text-4xl text-2xl text-white">Failed to load data</p>
     </div>
     <div class="lg:pl-[5rem]" v-if="ready == true" v-motion-fade>
-      <div>
+      <div v-once>
         <HeroBoard :show="trending.shows[3]" />
         <MoblieHero :show="trending.shows[3]" class="lg:hidden" />
       </div>
-      <PopularTvShow />
-      <TopRatedShows />
-      <CurrentlyAiring />
-      <AiringToday />
-      <Footer />
+      <PopularTvShow v-once/>
+      <TopRatedShows v-once/>
+      <CurrentlyAiring v-once/>
+      <AiringToday v-once/>
+      <Footer v-once/>
     </div>
   </div>
 </template>

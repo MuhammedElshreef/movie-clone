@@ -2,11 +2,19 @@
 // Initialization for ES Users
 // import { ref } from 'vue'
 // import axios from 'axios'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { Modal, Ripple, initTE } from 'tw-elements'
 onMounted(() => {
   initTE({ Modal, Ripple })
 })
+
+watch(
+  () => props.isModalOpen,
+  (val) => {
+    document.body.style.overflow = val ? 'hidden' : 'auto'
+  }
+)
+
 const props = defineProps({
   link: String,
   isModalOpen: Boolean

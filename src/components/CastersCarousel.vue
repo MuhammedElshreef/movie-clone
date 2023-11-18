@@ -69,9 +69,7 @@ onMounted(() => {
   <div>
     <div class="pl-[2rem] hidden lg:block" v-if="hasCasters == true">
       <div class="py-4">
-        <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade-visible-once
-          >Cast</span
-        >
+        <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade>Cast</span>
       </div>
       <swiper
         :navigation="true"
@@ -85,12 +83,13 @@ onMounted(() => {
             class="flex flex-col gap-2 group hover:cursor-pointer"
             @click="getDetails(caster.id)"
           >
-            <img
-              v-if="caster.profile_path !== null"
-              :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
-              class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt="caster's profile image"
-            />
+            <div v-if="caster.profile_path !== null" class="h-[255.64px] bg-[#202124]">
+              <img
+                :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
+                class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                alt="caster's profile image"
+              />
+            </div>
             <div v-else class="flex justify-center items-center h-[255.64px] bg-[#202124]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -114,11 +113,9 @@ onMounted(() => {
       </swiper>
     </div>
     <div>
-      <div class="block lg:hidden">
+      <div class="block lg:hidden" v-motion-fade>
         <div class="py-4">
-          <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade-visible-once
-            >Cast</span
-          >
+          <span class="pl-[1rem] lg:text-3xl text-2xl text-white">Cast</span>
         </div>
 
         <swiper :modules="[FreeMode]" :slides-per-view="3" :freeMode="true" class="mySwiper">
@@ -127,12 +124,13 @@ onMounted(() => {
               class="flex flex-col gap-2 group hover:cursor-pointer"
               @click="getDetails(caster.id)"
             >
-              <img
-                v-if="caster.profile_path !== null"
-                :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
-                class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-                alt="caster's profile image"
-              />
+              <div v-if="caster.profile_path !== null" class="h-[151.5px] bg-[#202124]">
+                <img
+                  :src="`https://image.tmdb.org/t/p/w500${caster.profile_path}`"
+                  class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                  alt="caster's profile image"
+                />
+              </div>
               <div v-else class="flex justify-center items-center h-[151.5px] bg-[#202124]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

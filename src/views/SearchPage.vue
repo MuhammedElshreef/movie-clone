@@ -13,31 +13,39 @@ const isLoading = ref()
 onMounted(() => {
   getData(route.query.q, currentPage.value)
 })
-function getData(id, page) {
-  const options = {
-    method: 'GET',
-    url: `https://api.themoviedb.org/3/search/multi?query=${id}&include_adult=false&language=en-US&page=${page}`,
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
-    }
-  }
 
-  axios
-    .request(options)
-    .then((res) => {
-      if (currentPage.value == 1) {
-        ;(shows.value = res.data.results), (totalPages.value = res.data.total_pages)
-        isLoading.value = false
-      } else if (currentPage.value >= 1) {
-        shows.value.push(...res.data.results)
-        isLoading.value = false
+const timeout = ref(null)
+const debounceFn = (fn, time) => {
+  if (timeout.value) clearTimeout(timeout.value)
+  timeout.value = setTimeout(fn, time)
+}
+
+function getData(id, page) {
+  debounceFn(() => {
+    const options = {
+      method: 'GET',
+      url: `https://api.themoviedb.org/3/search/multi?query=${id}&include_adult=false&language=en-US&page=${page}`,
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
       }
-    })
-    .catch(function (error) {
-      console.error(error)
-    })
+    }
+    axios
+      .request(options)
+      .then((res) => {
+        if (currentPage.value == 1) {
+          ;(shows.value = res.data.results), (totalPages.value = res.data.total_pages)
+          isLoading.value = false
+        } else if (currentPage.value >= 1) {
+          shows.value.push(...res.data.results)
+          isLoading.value = false
+        }
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }, 500)
 }
 watch(route, () => {
   window.scrollTo({
@@ -82,6 +90,7 @@ window.addEventListener('scroll', () => {
               (show.media_type == 'movie' && show.poster_path !== null) ||
               (show.media_type == 'tv' && show.poster_path !== null)
             "
+            class="lg:w-[248px] lg:h-[372px]"
           >
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"

@@ -72,9 +72,7 @@ onMounted(() => {
   <div>
     <div class="pl-[2rem] hidden lg:block" v-if="hasRecommendation">
       <div class="py-4">
-        <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade-visible-once
-          >More Like This</span
-        >
+        <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade>More Like This</span>
       </div>
       <swiper
         :navigation="true"
@@ -88,13 +86,17 @@ onMounted(() => {
             class="flex flex-col gap-2 group hover:cursor-pointer"
             @click="pushRoute(recommended.media_type, recommended.id)"
           >
-            <img
+            <div
+              class="lg:w-[248px] lg:h-[372px] bg-[#202124]"
               v-if="!recommendedShows.poster_path"
-              :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
-              class="w-full h-full transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-              alt="recommended poster image"
-            />
-            <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
+            >
+              <img
+                :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
+                class="w-full h-full transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                alt="recommended poster image"
+              />
+            </div>
+            <div v-else class="flex justify-center items-center lg:h-[414px] bg-[#202124]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -122,7 +124,7 @@ onMounted(() => {
     <div>
       <div class="block lg:hidden" v-if="hasRecommendation">
         <div class="py-4">
-          <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade-visible-once
+          <span class="pl-[1rem] lg:text-3xl text-2xl text-white" v-motion-fade
             >More Like This</span
           >
         </div>
@@ -132,13 +134,14 @@ onMounted(() => {
               class="flex flex-col gap-2 group hover:cursor-pointer"
               @click="pushRoute(recommended.media_type, recommended.id)"
             >
-              <img
-                v-if="!recommendedShows.poster_path"
-                :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
-                class=" transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
-                alt="image for the not found poster for the recommended"
-              />
-              <div v-else class="flex justify-center items-center h-[414px] bg-[#202124]">
+              <div v-if="!recommendedShows.poster_path" class="w-[101px] h-[151px] bg-[#202124]">
+                <img
+                  :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
+                  class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                  alt="image for the not found poster for the recommended"
+                />
+              </div>
+              <div v-else class="flex justify-center items-center w-[101px] h-[151px] bg-[#202124]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

@@ -13,50 +13,53 @@ const isModalOpen = ref(false)
 function toggleModal(e) {
   isModalOpen.value = e
 }
+const haveTrailer = ref(false)
 onMounted(() => {
-  setTimeout(() => {
-    if (props.show.media_type == 'movie' || route.path == '/movie') {
-      const options = {
-        method: 'GET',
-        url: `https://api.themoviedb.org/3/movie/${props.show.id}/videos?language=en-US`,
-        headers: {
-          accept: 'application/json',
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
-        }
+  if (props.show.media_type == 'movie' || route.path == '/movie') {
+    const options = {
+      method: 'GET',
+      url: `https://api.themoviedb.org/3/movie/${props.show.id}/videos?language=en-US`,
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
       }
-
-      axios
-        .request(options)
-        .then(
-          (res) => (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`)
-        )
-
-        .catch(function (error) {
-          console.error(error)
-        })
-    } else if (props.show.media_type == 'tv' || route.path == '/tv') {
-      const options = {
-        method: 'GET',
-        url: `https://api.themoviedb.org/3/tv/${props.show.id}/videos?language=en-US`,
-        headers: {
-          accept: 'application/json',
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
-        }
-      }
-
-      axios
-        .request(options)
-        .then(
-          (res) => (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[0].key}`)
-        )
-
-        .catch(function (error) {
-          console.error(error)
-        })
     }
-  }, 1000)
+    axios
+      .request(options)
+      .then((res) => {
+        if (res.data.results[0]) {
+          ;(haveTrailer.value = true),
+            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`)
+          console.log(trailerLink.value)
+        }
+      })
+
+      .catch(function (error) {
+        console.error(error)
+      })
+  } else if (props.show.media_type == 'tv' || route.path == '/tv') {
+    const options = {
+      method: 'GET',
+      url: `https://api.themoviedb.org/3/tv/${props.show.id}/videos?language=en-US`,
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWY1Yjg3ZDRkODE3MzYwMzgxODljOGE4MDVkODkzNCIsInN1YiI6IjY1MjMxYmI1YzUwYWQyMDEwYjAyYjFhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VLGIE_b5QnQP7EBbdIsN3QVeZCaB2n0zaiES6gXC_G8'
+      }
+    }
+    axios
+      .request(options)
+      .then((res) => {
+        if (res.data.results[0]) {
+          ;(haveTrailer.value = true),
+            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[0].key}`)
+        }
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
 })
 </script>
 <template>
@@ -71,7 +74,11 @@ onMounted(() => {
         :showType="props.show.media_type"
         class=""
       /> -->
-      <button class="lg:hidden absolute top-1/3 left-[41%]" @click="isModalOpen = true">
+      <button
+        class="lg:hidden absolute top-1/3 left-[41%]"
+        @click="isModalOpen = true"
+        v-if="haveTrailer"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
