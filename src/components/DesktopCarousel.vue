@@ -38,7 +38,7 @@ function exploreMore(type, category) {
             class="flex items-center justify-center bg-[#202124] h-[387px] transition ease-in-out hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
             @click="exploreMore(props.type, props.category)"
           >
-            <span class="text-white text-2xl">Explore More</span>
+            <span class="text-2xl text-white">Explore More</span>
           </div>
         </swiper-slide>
       </swiper>

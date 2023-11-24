@@ -4,7 +4,10 @@ import axios from 'axios'
 const numberOfEp = ref(0)
 const episodes = ref([])
 const props = defineProps({
-  show: Array
+  show: {
+    type: Object,
+    required: true
+  }
 })
 function getData(id, seasNum) {
   const options = {
@@ -27,21 +30,26 @@ function getData(id, seasNum) {
       console.error(error)
     })
 }
-const selectedSeason = ref()
+const selectedSeason = ref(props.show.number_of_seasons ? 1 : null)
 watch(selectedSeason, () => {
   getData(props.show.id, selectedSeason.value)
 })
 onMounted(() => {
   getData(props.show.id, 1)
-  console.log(episodes.value)
 })
+
+const shortDescription = (text, maxLength = 150) => {
+  if (!text) return ''
+  if (text.length <= maxLength) return text
+  return text.substr(0, maxLength) + '...'
+}
 </script>
 <template>
-  <div v-motion-fade class="lg:px-[3rem] px-[2rem] flex flex-col gap-8">
-    <div class="flex gap-2 items-center">
+  <div class="lg:px-[3rem] px-[2rem] flex flex-col gap-8">
+    <div class="flex items-center gap-2">
       <select
         v-model="selectedSeason"
-        class="w-36 h-8 px-2"
+        class="h-8 px-2 w-36"
         v-if="props.show.number_of_seasons >= 1"
       >
         <option v-for="i in props.show.number_of_seasons" :key="i" :value="i">
@@ -50,12 +58,12 @@ onMounted(() => {
       </select>
       <span> {{ numberOfEp }} Episodes</span>
     </div>
-    <div class="grid lg:grid-cols-4 gap-2" v-if="episodes.length >= 1" v-motion-fade>
+    <div class="grid gap-2 lg:grid-cols-4 gap-x-4 gap-y-6" v-if="episodes.length >= 1">
       <div
         v-for="ep in episodes"
         :key="ep.id"
         class="flex flex-col gap-4 text-gray-300"
-        :class="{ 'h-96 relative': ep.overview != '' }"
+        :class="{ relative: ep.overview != '' }"
       >
         <div class="flex flex-col gap-4">
           <img
@@ -67,14 +75,14 @@ onMounted(() => {
             <span class="text-blue-600">E{{ ep.episode_number }}</span>
             <p>{{ ep.name }}</p>
           </div>
-          <p class="text-sm" v-if="ep.overview != ''">{{ ep.overview }}</p>
+          <p class="text-sm" v-if="ep.overview != ''">{{ shortDescription(ep.overview) }}</p>
         </div>
-        <p class="text-gray-400" :class="{ 'absolute lg:bottom-4 bottom-2': ep.overview != '' }">
+        <p class="text-gray-400">
           {{ ep.air_date }}
         </p>
       </div>
     </div>
-    <div class="flex justify-center items-center min-h-[200px]" v-else v-motion-fade>
+    <div class="flex justify-center items-center min-h-[200px]" v-else>
       <p class="text-4xl text-white">No Episodes Found</p>
     </div>
   </div>

@@ -6,7 +6,10 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const props = defineProps({
-  show: Array
+  show: {
+    type: Object,
+    required: true
+  }
 })
 const trailerLink = ref('')
 const isModalOpen = ref(false)
@@ -28,10 +31,9 @@ onMounted(() => {
     axios
       .request(options)
       .then((res) => {
-        if (res.data.results[0]) {
-          ;(haveTrailer.value = true),
-            (trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`)
-          console.log(trailerLink.value)
+        if (res.data.results[0] && res.data.results[1]) {
+          haveTrailer.value = true
+          trailerLink.value = `https://www.youtube.com/embed/${res.data.results[1].key}`
         }
       })
 
@@ -106,12 +108,12 @@ onMounted(() => {
         loading="lazy"
       />
     </div>
-    <div class="bg-black text-white flex flex-col justify-center">
+    <div class="flex flex-col justify-center text-white bg-black">
       <div class="container flex flex-col gap-2 py-6">
         <p class="text-4xl">{{ props.show.title }} {{ props.show.name }}</p>
         <div class="flex gap-2">
           <RatingStars :rating="props.show.vote_average" />
-          <span class="text-gray-500 pt-1">{{ props.show.vote_count }} reviews</span>
+          <span class="pt-1 text-gray-500">{{ props.show.vote_count }} reviews</span>
         </div>
         <div class="flex gap-4">
           <span class="text-gray-500 pt-0.5"

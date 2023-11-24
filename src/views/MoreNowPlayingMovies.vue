@@ -2,7 +2,7 @@
 import RatingStars from '../components/RatingStars.vue'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
-import { useRouter,  } from 'vue-router'
+import { useRouter } from 'vue-router'
 const router = useRouter()
 const shows = ref([])
 const totalPages = ref()
@@ -68,7 +68,7 @@ function getDetails(type, id) {
           <div v-if="show.poster_path">
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300 object-cover"
               alt="show poster"
             />
           </div>

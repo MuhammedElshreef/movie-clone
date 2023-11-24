@@ -2,10 +2,11 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import SearchBar from './SearchBar.vue'
+
 const router = useRouter()
 const isSearchBarOpen = ref(false)
 const route = useRoute()
-const lastRoute = ref(`/`)
+const lastPath = ref(`/`)
 const firstPath = ref()
 watch(route, () => {
   if (
@@ -15,6 +16,14 @@ watch(route, () => {
   )
     isSearchBarOpen.value = false
 })
+
+watch(
+  () => route.path,
+  (_, oldPath) => {
+    lastPath.value = oldPath
+  }
+)
+
 router.beforeEach((to, from, next) => {
   firstPath.value = to.path.split('/')[1]
   next()
@@ -37,7 +46,6 @@ router.beforeEach((to, from, next) => {
             'stroke-[#1E89DE]': route.name === 'home',
             'hover:stroke-slate-400': route.name !== 'home'
           }"
-          @click="(isSearchBarOpen = false), (lastRoute = '/')"
         >
           <path
             stroke-linecap="round"
@@ -58,7 +66,6 @@ router.beforeEach((to, from, next) => {
             'stroke-[#1E89DE]': firstPath == 'movie',
             'hover:stroke-slate-400': firstPath != 'movie'
           }"
-          @click="(isSearchBarOpen = false), (lastRoute = '/movie')"
         >
           <path
             stroke-linecap="round"
@@ -79,7 +86,6 @@ router.beforeEach((to, from, next) => {
             'stroke-[#1E89DE]': firstPath == 'tv',
             'hover:stroke-slate-400': firstPath != 'tv'
           }"
-          @click="(isSearchBarOpen = false), (lastRoute = '/tv')"
         >
           <path
             stroke-linecap="round"
@@ -106,7 +112,7 @@ router.beforeEach((to, from, next) => {
       </svg>
     </div>
     <div v-if="isSearchBarOpen == true || route.path == '/search'" class="pl-[5rem]">
-      <SearchBar :prev-route="lastRoute" />
+      <SearchBar :prev-route="lastPath" />
       <div
         class="min-h-screen fixed w-full z-[1400]"
         v-if="!route.query.q"

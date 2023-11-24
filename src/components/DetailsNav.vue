@@ -1,48 +1,49 @@
 <script setup>
-import { ref } from 'vue'
-const activeButton = ref(1)
-defineProps({
-  type: String
-})
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const rootRoute = route.matched[0].path.replace(':id', route.params.id)
 </script>
 <template>
-  <div class="flex justify-center lg:gap-16 gap-4">
-    <button
-      class="lg:text-lg text-sm hover:text-white"
+  <div class="flex justify-center gap-4 lg:gap-16">
+    <router-link
+      class="text-sm lg:text-lg hover:text-white"
       :class="{
-        'text-white underline lg:text-2xl underline-offset-[12px]': activeButton == 1
+        'text-white underline lg:text-2xl underline-offset-[12px]': route.path == rootRoute
       }"
-      @click="(activeButton = 1), $emit('activeTap', 'OverView')"
+      :to="`${rootRoute}`"
     >
       OVERVIEW
-    </button>
-    <button
-      v-if="type == 'tv'"
-      class="lg:text-lg text-sm hover:text-white"
+    </router-link>
+    <router-link
+      v-if="route.matched[0].name == 'tvDetails'"
+      :to="`${rootRoute}/episodes`"
+      class="text-sm lg:text-lg hover:text-white"
       :class="{
-        'text-white underline lg:text-2xl underline-offset-[12px]': activeButton == 2
+        'text-white underline lg:text-2xl underline-offset-[12px]':
+          route.path == `${rootRoute}/episodes`
       }"
-      @click="(activeButton = 2), $emit('activeTap', 'EpisodesPage')"
     >
       EPISODES
-    </button>
-    <!-- <button
-      class="lg:text-lg text-sm hover:text-white"
+    </router-link>
+    <!-- <router-link
+      class="text-sm lg:text-lg hover:text-white"
       :class="{
-        'text-white underline lg:text-2xl underline-offset-[12px]': activeButton == 3
+        'text-white underline lg:text-2xl underline-offset-[12px]': false
       }"
-      @click="(activeButton = 3), $emit('activeTap', 'VideosPage')"
+      @click="(false), $emit('activeTap', 'VideosPage')"
     >
       VIDEOS
-    </button> -->
-    <button
-      class="lg:text-lg text-sm hover:text-white"
+    </router-link> -->
+    <router-link
+      :to="`${rootRoute}/photos`"
+      class="text-sm lg:text-lg hover:text-white"
       :class="{
-        'text-white underline lg:text-2xl underline-offset-[12px]': activeButton == 4
+        'text-white underline lg:text-2xl underline-offset-[12px]':
+          route.path == `${rootRoute}/photos`
       }"
-      @click="(activeButton = 4), $emit('activeTap', 'PhotosPage')"
     >
       PHOTOS
-    </button>
+    </router-link>
   </div>
 </template>

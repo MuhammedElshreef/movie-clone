@@ -18,6 +18,5 @@ export const useTrendingTv = defineStore('trendingTv', () => {
     .then((res) => shows.value.push(...res.data.results))
 
     .catch((err) => console.log(err))
-
   return { shows }
 })

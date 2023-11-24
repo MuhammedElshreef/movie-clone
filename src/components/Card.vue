@@ -1,20 +1,20 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import RatingStars from "./RatingStars.vue";
-import { useRoute, useRouter } from "vue-router";
-const router = useRouter();
-const route = useRoute();
+import RatingStars from './RatingStars.vue'
+import { useRoute, useRouter } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 defineProps({
-  show: Object,
-});
+  show: Object
+})
 
 function details(type, id) {
-  if (route.path == "/") {
-    router.push({ path: `/${type}/${id}` });
-  } else if (route.path == "/movie") {
-    router.push({ path: `/movie/${id}` });
-  } else if (route.path == "/tv") {
-    router.push({ path: `/tv/${id}` });
+  if (route.path == '/') {
+    router.push({ path: `/${type}/${id}` })
+  } else if (route.path == '/movie') {
+    router.push({ path: `/movie/${id}` })
+  } else if (route.path == '/tv') {
+    router.push({ path: `/tv/${id}` })
   }
 }
 </script>
@@ -28,13 +28,10 @@ function details(type, id) {
         <img
           v-if="show.poster_path"
           :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
-          class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+          class="object-cover transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-105"
           alt="poster image"
         />
-        <div
-          v-else
-          class="flex justify-center items-center lg:w-[257px] lg:h-[385px] bg-[#202124]"
-        >
+        <div v-else class="flex justify-center items-center lg:w-[257px] lg:h-[385px] bg-[#202124]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -51,12 +48,10 @@ function details(type, id) {
           </svg>
         </div>
       </div>
-      <span class="truncate lg:block hidden"
-        >{{ show.title }} {{ show.name }}</span
-      >
-      <div class="lg:flex gap-4 hidden">
+      <span class="hidden truncate lg:block">{{ show.title }} {{ show.name }}</span>
+      <div class="hidden gap-4 lg:flex">
         <RatingStars :rating="show.vote_average" />
-        <span class="text-gray-500 pt-1">{{ show.vote_average / 2 }}</span>
+        <span class="pt-1 text-gray-500">{{ show.vote_average / 2 }}</span>
       </div>
     </div>
   </div>

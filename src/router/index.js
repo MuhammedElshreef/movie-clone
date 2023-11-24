@@ -30,7 +30,24 @@ const router = createRouter({
     {
       path: '/tv/:id',
       name: 'tvDetails',
-      component: () => import('../views/TvDetails.vue')
+      component: () => import('../views/TvDetails.vue'),
+      children: [
+        {
+          path: '',
+          name: 'tvOverview',
+          component: () => import('../components/TvOverView.vue')
+        },
+        {
+          path: 'episodes',
+          name: 'tvEpisodes',
+          component: () => import('../components/EpisodesPage.vue')
+        },
+        {
+          path: 'photos',
+          name: 'tvPhotos',
+          component: () => import('../components/PhotosPage.vue')
+        }
+      ]
     },
     {
       path: '/movie/:id',

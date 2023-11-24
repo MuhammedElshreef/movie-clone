@@ -28,7 +28,7 @@ onMounted(() => {
         v-model="name"
       />
       <button
-        class="absolute lg:top-9 top-4 right-8 text-gray-300"
+        class="absolute text-gray-300 lg:top-9 top-4 right-8"
         @click="router.push({ path: `${props.prevRoute}` })"
         v-if="name"
       >

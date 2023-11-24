@@ -5,10 +5,9 @@ import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
-import OverView from '../components/TvOverView.vue'
-// import VideosPage from '../components/VideosPage.vue'
-import EpisodesPage from '../components/EpisodesPage.vue'
-import PhotosPage from '../components/PhotosPage.vue'
+// import OverView from '../components/TvOverView.vue'
+// import EpisodesPage from '../components/EpisodesPage.vue'
+// import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -40,37 +39,31 @@ function getData(id) {
       ready.value = false
     })
 }
-onMounted(() => {
-  getData(route.params.id)
-})
-watch(route, () => {
-  window.location.reload()
-})
-const activeTap = ref('OverView')
-const tabs = {
-  OverView,
-  // VideosPage,
-  EpisodesPage,
-  PhotosPage
-}
-function toggleTaps(e) {
-  activeTap.value = e
-}
+
+watch(
+  () => route.params.id,
+  () => {
+    scrollTo(0, 0)
+    getData(route.params.id)
+  },
+  { immediate: true }
+)
 </script>
 <template>
   <div>
-    <div class="min-h-screen flex justify-center items-center" v-if="ready == false" v-motion-fade>
-      <p class="lg:text-4xl text-2xl text-white">Failed to load data</p>
+    <div class="flex items-center justify-center min-h-screen" v-if="ready == false" v-motion-fade>
+      <p class="text-2xl text-white lg:text-4xl">Failed to load data</p>
     </div>
     <div class="lg:pl-[5rem] flex flex-col gap-10" v-if="ready == true" v-motion-fade>
       <div>
         <HeroBoard :show="show" class="hidden lg:block" />
         <MoblieHero :show="show" class="lg:hidden" />
       </div>
-      <DetailsNav @active-tap="toggleTaps" :type="'tv'" />
-      <component :is="tabs[activeTap]" :show="show"> </component>
+      <DetailsNav />
+      <router-view :show="show"></router-view>
+      <!-- <component :is="tabs[activeTap]" :show="show"> </component> -->
       <!-- <OverView :show="show" /> -->
-      <RecommendationShows :show-id="show.id" :show-type="'tv'" />
+      <RecommendationShows />
       <Footer />
     </div>
   </div>

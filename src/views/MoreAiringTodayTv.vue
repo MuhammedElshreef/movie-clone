@@ -57,7 +57,7 @@ function getDetails(type, id) {
     <div class="flex flex-col lg:pr-[4rem] px-2">
       <p class="">Tv Shows Airing Today :</p>
 
-      <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16">
+      <div class="grid grid-cols-3 gap-2 pt-4 pb-16 lg:grid-cols-5 lg:gap-4 lg:py-6">
         <div
           class="flex flex-col gap-2 group hover:cursor-pointer"
           v-for="show in shows"
@@ -68,7 +68,7 @@ function getDetails(type, id) {
           <div v-if="show.poster_path">
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300 object-cover"
               alt="show poster"
             />
           </div>
@@ -92,14 +92,14 @@ function getDetails(type, id) {
             </svg>
           </div>
 
-          <span class="truncate text-xl lg:block hidden">{{ show.title }} {{ show.name }}</span>
+          <span class="hidden text-xl truncate lg:block">{{ show.title }} {{ show.name }}</span>
           <div v-if="show.media_type != 'person'" class="hidden gap-4 lg:flex">
             <RatingStars :rating="show.vote_average" />
-            <span class="text-gray-500 pt-1 text-lg">{{ show.vote_average / 2 }}</span>
+            <span class="pt-1 text-lg text-gray-500">{{ show.vote_average / 2 }}</span>
           </div>
         </div>
       </div>
-      <div role="status" class="flex justify-center items-center h-36" v-if="isLoading">
+      <div role="status" class="flex items-center justify-center h-36" v-if="isLoading">
         <svg
           aria-hidden="true"
           class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

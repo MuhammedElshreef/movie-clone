@@ -5,28 +5,19 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
 import { Navigation, FreeMode } from 'swiper/modules'
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import axios from 'axios'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+
 const route = useRoute()
-const router = useRouter()
 const recommendedShows = ref([])
 const hasRecommendation = ref(false)
-const props = defineProps({
-  showId: Number,
-  showType: String
-})
-function pushRoute(type, id) {
-  router.push({ path: `/${type}/${id}` })
-  setTimeout(() => {
-    window.location.reload()
-  }, 100)
-}
-onMounted(() => {
-  if (route.name == 'tvDetails') {
+
+const getData = async () => {
+  if (route.matched[0].name == 'tvDetails' && route.params.id) {
     const options = {
       method: 'GET',
-      url: `https://api.themoviedb.org/3/tv/${props.showId}/recommendations?language=en-US&page=1`,
+      url: `https://api.themoviedb.org/3/tv/${route.params.id}/recommendations?language=en-US&page=1`,
       headers: {
         accept: 'application/json',
         Authorization:
@@ -34,19 +25,18 @@ onMounted(() => {
       }
     }
 
-    axios
-      .request(options)
-      .then(function (response) {
-        recommendedShows.value = response.data.results
-        if (recommendedShows.value.length >= 1) hasRecommendation.value = true
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  } else if (route.name == 'movieDetails') {
+    try {
+      const response = await axios.request(options)
+
+      recommendedShows.value = response.data.results
+      if (recommendedShows.value.length >= 1) hasRecommendation.value = true
+    } catch (error) {
+      console.log(error)
+    }
+  } else if (route.matched[0].name == 'movieDetails' && route.params.id) {
     const options = {
       method: 'GET',
-      url: `https://api.themoviedb.org/3/movie/${props.showId}/recommendations?language=en-US`,
+      url: `https://api.themoviedb.org/3/movie/${route.params.id}/recommendations?language=en-US`,
       headers: {
         accept: 'application/json',
         Authorization:
@@ -66,7 +56,15 @@ onMounted(() => {
         console.error(error)
       })
   }
-})
+}
+
+watch(
+  () => route.params.id,
+  () => {
+    getData()
+  },
+  { immediate: true }
+)
 </script>
 <template>
   <div>
@@ -82,9 +80,9 @@ onMounted(() => {
         class="mySwiper"
       >
         <swiper-slide v-for="recommended in recommendedShows" :key="recommended.id" class="px-3">
-          <div
+          <router-link
+            :to="`/${recommended.media_type}/${recommended.id}`"
             class="flex flex-col gap-2 group hover:cursor-pointer"
-            @click="pushRoute(recommended.media_type, recommended.id)"
           >
             <div
               class="lg:w-[248px] lg:h-[372px] bg-[#202124]"
@@ -92,7 +90,7 @@ onMounted(() => {
             >
               <img
                 :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
-                class="w-full h-full transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                class="w-full h-full transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-105"
                 alt="recommended poster image"
               />
             </div>
@@ -112,12 +110,12 @@ onMounted(() => {
                 />
               </svg>
             </div>
-            <span class="truncate lg:block hidden text-lg"> {{ recommended.name }}</span>
+            <span class="hidden text-lg truncate lg:block"> {{ recommended.name }}</span>
             <div class="flex gap-2">
               <RatingStars :rating="recommended.vote_average" />
-              <span class="text-gray-500 pt-1">{{ recommended.vote_average / 2 }}</span>
+              <span class="pt-1 text-gray-500">{{ recommended.vote_average / 2 }}</span>
             </div>
-          </div>
+          </router-link>
         </swiper-slide>
       </swiper>
     </div>
@@ -137,7 +135,7 @@ onMounted(() => {
               <div v-if="!recommendedShows.poster_path" class="w-[101px] h-[151px] bg-[#202124]">
                 <img
                   :src="`https://image.tmdb.org/t/p/w500${recommended.poster_path}`"
-                  class="transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+                  class="transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-105"
                   alt="image for the not found poster for the recommended"
                 />
               </div>

@@ -40,12 +40,15 @@ function getData(id) {
       ready.value = false
     })
 }
-onMounted(() => {
-  getData(route.params.id)
-})
-watch(route, () => {
-  window.location.reload()
-})
+
+watch(
+  () => route.params.id,
+  () => {
+    scrollTo(0, 0)
+    getData(route.params.id)
+  },
+  { immediate: true }
+)
 const activeTap = ref('OverView')
 const tabs = {
   OverView,
@@ -59,8 +62,8 @@ function toggleTaps(e) {
 </script>
 <template>
   <div>
-    <div class="min-h-screen flex justify-center items-center" v-if="ready == false" v-motion-fade>
-      <p class="lg:text-4xl text-2xl text-white">Failed to load data</p>
+    <div class="flex items-center justify-center min-h-screen" v-if="ready == false" v-motion-fade>
+      <p class="text-2xl text-white lg:text-4xl">Failed to load data</p>
     </div>
     <div class="lg:pl-[5rem] flex flex-col gap-10" v-if="ready == true" v-motion-fade>
       <div>

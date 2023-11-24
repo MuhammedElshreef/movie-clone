@@ -1,11 +1,19 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import CastersCarousel from '../components/CastersCarousel.vue'
+
+const props = defineProps({
+  show: {
+    type: Object,
+    required: true
+  }
+})
+
 const route = useRoute()
 const showSocial = ref([])
-onMounted(() => {
+const getData = () => {
   const options = {
     method: 'GET',
     url: `https://api.themoviedb.org/3/tv/${route.params.id}/external_ids`,
@@ -25,10 +33,13 @@ onMounted(() => {
     .catch(function (error) {
       console.error(error)
     })
-})
-const props = defineProps({
-  show: Array
-})
+}
+
+watch(
+  () => route.params.id,
+  () => getData(),
+  { immediate: true }
+)
 </script>
 <template>
   <div v-motion-fade>
@@ -39,22 +50,22 @@ const props = defineProps({
         alt="show poster"
       />
       <div class="flex flex-col gap-6 text-white">
-        <span class="lg:text-3xl text-2xl">Storyline</span>
-        <p class="lg:text-base text-sm">{{ props.show.overview }}</p>
+        <span class="text-2xl lg:text-3xl">Storyline</span>
+        <p class="text-sm lg:text-base">{{ props.show.overview }}</p>
         <div class="flex flex-col gap-2">
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.first_air_date">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.first_air_date">
             <span class="w-24">First Aired</span>
             <p>{{ props.show.first_air_date }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.last_air_date">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.last_air_date">
             <span class="w-24">Last Aired</span>
             <p>{{ props.show.last_air_date }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.episode_run_time.length != 0">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.episode_run_time.length != 0">
             <span class="w-24">Runtime</span>
             <p>{{ props.show.episode_run_time[0] }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.created_by">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.created_by">
             <span class="w-24">Creator</span>
             <div class="flex gap-2">
               <a
@@ -68,7 +79,7 @@ const props = defineProps({
             </div>
           </div>
           <!-- add page for the route -->
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.genres">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.genres">
             <span class="w-24">Genre</span>
             <div class="flex gap-2">
               <a
@@ -80,26 +91,26 @@ const props = defineProps({
               </a>
             </div>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.number_of_seasons">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.number_of_seasons">
             <span class="w-24">Seasons</span>
             <p>{{ props.show.number_of_seasons }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.number_of_episodes">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.number_of_episodes">
             <span class="w-24">Episodes</span>
             <p>{{ props.show.number_of_episodes }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.status">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.status">
             <span class="w-24">Status</span>
             <p>{{ props.show.status }}</p>
           </div>
-          <div class="flex lg:gap-16 gap-8" v-if="props.show.languages">
+          <div class="flex gap-8 lg:gap-16" v-if="props.show.languages">
             <span class="w-24">Language</span>
             <div class="flex gap-2">
               <p v-for="lang in props.show.languages" :key="lang.id">{{ lang }}</p>
             </div>
           </div>
           <!-- fix the network here  -->
-          <!-- <div class="flex lg:gap-16 gap-8" v-if="props.show.networks">
+          <!-- <div class="flex gap-8 lg:gap-16" v-if="props.show.networks">
           <span class="w-24">Network</span>
           <div class="flex">
             <span v-for="network in props.show.networks" :key="network.id">{{ network.name }}</span>

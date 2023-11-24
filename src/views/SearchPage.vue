@@ -2,9 +2,8 @@
 import axios from 'axios'
 import RatingStars from '../components/RatingStars.vue'
 
-import { useRoute, useRouter } from 'vue-router'
-import { watch, onMounted, ref } from 'vue'
-const router = useRouter()
+import { useRoute } from 'vue-router'
+import { watch, onMounted, ref, onUnmounted } from 'vue'
 const route = useRoute()
 const shows = ref([])
 const totalPages = ref()
@@ -56,33 +55,41 @@ watch(route, () => {
   getData(route.query.q, currentPage.value)
   isLoading.value = false
 })
-function getDetails(type, id) {
-  router.push({ path: `/${type}/${id}` })
-}
 
-window.addEventListener('scroll', () => {
-  setTimeout(() => {
-    if (window.scrollY.toFixed() >= document.getElementById('test').clientHeight - 900) {
-      if (totalPages.value != currentPage.value) {
-        isLoading.value = true
-        currentPage.value += 1
-        getData(route.query.q, currentPage.value)
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    setTimeout(() => {
+      const searchListEle = document.getElementById('search-list')
+      if (!searchListEle) return
+      if (window.scrollY.toFixed() >= searchListEle.clientHeight - 900) {
+        if (totalPages.value != currentPage.value) {
+          isLoading.value = true
+          currentPage.value += 1
+          getData(route.query.q, currentPage.value)
+        }
       }
-    }
-  }, 2000)
+    }, 2000)
+  })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', () => {})
 })
 </script>
 <template>
-  <div class="min-h-screen lg:pl-[8rem] pt-[8rem] lg:text-4xl text-2xl text-gray-200" id="test">
+  <div
+    class="min-h-screen lg:pl-[8rem] pt-[8rem] lg:text-4xl text-2xl text-gray-200"
+    id="search-list"
+  >
     <div class="flex flex-col lg:pr-[4rem] px-2">
       <p class="">Results For: {{ route.query.q }}</p>
 
-      <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16">
-        <div
+      <div class="grid grid-cols-3 gap-2 pt-4 pb-16 lg:grid-cols-5 lg:gap-4 lg:py-6">
+        <router-link
           class="flex flex-col gap-2 group hover:cursor-pointer"
           v-for="show in shows"
           :key="show.id"
-          @click="getDetails(show.media_type, show.id)"
+          :to="`/${show.media_type}/${show.id}`"
           v-motion-fade
         >
           <div
@@ -94,14 +101,14 @@ window.addEventListener('scroll', () => {
           >
             <img
               :src="`https://image.tmdb.org/t/p/w500${show.poster_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300 object-cover"
               alt=" posters for the found shows"
             />
           </div>
           <div v-else-if="show.media_type == 'person' && show.profile_path !== null">
             <img
               :src="`https://image.tmdb.org/t/p/w500/${show.profile_path}`"
-              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+              class="lg:w-[248px] lg:h-[372px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300 object-cover"
               alt="profile photo for the found person"
             />
           </div>
@@ -125,14 +132,14 @@ window.addEventListener('scroll', () => {
             </svg>
           </div>
 
-          <span class="truncate text-xl lg:block hidden">{{ show.title }} {{ show.name }}</span>
+          <span class="hidden text-xl truncate lg:block">{{ show.title }} {{ show.name }}</span>
           <div v-if="show.media_type != 'person'" class="hidden gap-4 lg:flex">
             <RatingStars :rating="show.vote_average" />
-            <span class="text-gray-500 pt-1 text-lg">{{ show.vote_average / 2 }}</span>
+            <span class="pt-1 text-lg text-gray-500">{{ show.vote_average / 2 }}</span>
           </div>
-        </div>
+        </router-link>
       </div>
-      <div role="status" class="flex justify-center items-center h-36" v-if="isLoading">
+      <div role="status" class="flex items-center justify-center h-36" v-if="isLoading">
         <svg
           aria-hidden="true"
           class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
