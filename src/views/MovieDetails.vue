@@ -1,14 +1,10 @@
 <script setup>
-import { getCurrentInstance, ref, onMounted, watch } from 'vue'
+import { getCurrentInstance, ref, watch } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'
 import DetailsNav from '../components/DetailsNav.vue'
-import OverView from '../components/OverviewMovie.vue'
 import RecommendationShows from '../components/RecommendationShows.vue'
-import EpisodesPage from '../components/EpisodesPage.vue'
-// import VideosPage from '../components/VideosPage.vue'
-import PhotosPage from '../components/PhotosPage.vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -49,16 +45,6 @@ watch(
   },
   { immediate: true }
 )
-const activeTap = ref('OverView')
-const tabs = {
-  OverView,
-  // VideosPage,
-  EpisodesPage,
-  PhotosPage
-}
-function toggleTaps(e) {
-  activeTap.value = e
-}
 </script>
 <template>
   <div>
@@ -70,8 +56,9 @@ function toggleTaps(e) {
         <HeroBoard :show="show" class="hidden lg:block" />
         <MoblieHero :show="show" class="lg:hidden" />
       </div>
-      <DetailsNav @active-tap="toggleTaps" :type="'movie'" />
-      <component :is="tabs[activeTap]" :show="show" :type="'movie'"> </component>
+      <DetailsNav />
+      <router-view :show="show"></router-view>
+
       <!-- <OverView :show="show" /> -->
       <RecommendationShows :show-id="show.id" :show-type="'movie'" />
       <Footer />

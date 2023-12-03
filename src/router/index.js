@@ -52,7 +52,19 @@ const router = createRouter({
     {
       path: '/movie/:id',
       name: 'movieDetails',
-      component: () => import('../views/MovieDetails.vue')
+      component: () => import('../views/MovieDetails.vue'),
+      children: [
+        {
+          path: '',
+          name: 'movieOverview',
+          component: () => import('../components/OverviewMovie.vue')
+        },
+        {
+          path: 'photos',
+          name: 'moviePhotos',
+          component: () => import('../components/PhotosPage.vue')
+        }
+      ]
     },
     {
       path: '/person/:id',

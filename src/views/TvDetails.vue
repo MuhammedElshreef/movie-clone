@@ -1,5 +1,5 @@
 <script setup>
-import { getCurrentInstance, ref, onMounted, watch } from 'vue'
+import { getCurrentInstance, ref, watch } from 'vue'
 import HeroBoard from '../components/HeroBoard.vue'
 import MoblieHero from '../components/MoblieHero.vue'
 import Footer from '../components/Footer.vue'

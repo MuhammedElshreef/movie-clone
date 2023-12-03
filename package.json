@@ -12,6 +12,7 @@
   "dependencies": {
     "@aacassandra/vue3-progressbar": "^1.0.3",
     "@headlessui/vue": "^1.7.16",
+    "@vueuse/core": "^10.6.1",
     "@vueuse/motion": "^2.0.0",
     "axios": "^1.5.1",
     "daisyui": "^3.9.2",
