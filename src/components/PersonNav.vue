@@ -6,7 +6,7 @@ defineProps({
 })
 </script>
 <template>
-  <div class="flex justify-center lg:gap-16 gap-4">
+  <div class="flex justify-center lg:gap-16 gap-4 text-gray-500">
     <button
       class="lg:text-lg text-sm hover:text-white"
       :class="{
