@@ -5,7 +5,7 @@ const route = useRoute()
 const rootRoute = route.matched[0].path.replace(':id', route.params.id)
 </script>
 <template>
-  <div class="flex justify-center gap-4 lg:gap-16">
+  <div class="flex justify-center gap-4 lg:gap-16 text-gray-500">
     <router-link
       class="text-sm lg:text-lg hover:text-white"
       :class="{
@@ -18,7 +18,7 @@ const rootRoute = route.matched[0].path.replace(':id', route.params.id)
     <router-link
       v-if="route.matched[0].name == 'tvDetails'"
       :to="`${rootRoute}/episodes`"
-      class="text-sm lg:text-lg hover:text-white"
+      class="text-sm lg:text-lg hover:text-white "
       :class="{
         'text-white underline lg:text-2xl underline-offset-[12px]':
           route.path == `${rootRoute}/episodes`
