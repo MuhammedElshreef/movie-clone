@@ -3,11 +3,13 @@ import RatingStars from '../components/RatingStars.vue'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useInfiniteScroll } from '@vueuse/core'
 const router = useRouter()
 const shows = ref([])
 const totalPages = ref()
 const currentPage = ref(1)
 const isLoading = ref()
+const el = ref(null)
 function getData(page) {
   const options = {
     method: 'GET',
@@ -25,9 +27,11 @@ function getData(page) {
       if (currentPage.value == 1) {
         ;(shows.value = res.data.results), (totalPages.value = res.data.total_pages)
         isLoading.value = false
+        currentPage.value += 1
       } else if (currentPage.value >= 1) {
         shows.value.push(...res.data.results)
         isLoading.value = false
+        currentPage.value += 1
       }
     })
     .catch(function (error) {
@@ -36,18 +40,30 @@ function getData(page) {
 }
 onMounted(() => {
   getData(currentPage.value)
+  console.log('asd')
 })
-window.addEventListener('scroll', () => {
-  setTimeout(() => {
-    if (window.scrollY.toFixed() >= document.getElementById('test').clientHeight - 900) {
-      if (totalPages.value != currentPage.value) {
-        isLoading.value = true
-        currentPage.value += 1
-        getData(currentPage.value)
-      }
-    }
-  }, 2000)
-})
+// window.addEventListener('scroll', () => {
+//   setTimeout(() => {
+//     if (window.scrollY.toFixed() >= document.getElementById('test').clientHeight - 900) {
+//       if (totalPages.value != currentPage.value) {
+//         isLoading.value = true
+//         currentPage.value += 1
+//         getData(currentPage.value)
+//       }
+//     }
+//   }, 2000)
+// })
+
+useInfiniteScroll(
+  el,
+  () => {
+    // if (currentPage.value == totalPages.value) return
+    console.log(el.value)
+    console.log(currentPage.value)
+    console.log('asd')
+  },
+  { distance: 10 }
+)
 function getDetails(type, id) {
   router.push({ path: `/${type}/${id}` })
 }
@@ -55,9 +71,9 @@ function getDetails(type, id) {
 <template>
   <div class="min-h-screen lg:pl-[8rem] pt-[2rem] lg:text-4xl text-2xl text-gray-200" id="test">
     <div class="flex flex-col lg:pr-[4rem] px-2">
-      <p class="">Popular Tv Shows :</p>
+      <p>Popular Tv Shows :</p>
 
-      <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16">
+      <div class="grid lg:grid-cols-5 grid-cols-3 lg:gap-4 gap-2 lg:py-6 pt-4 pb-16" ref="el">
         <div
           class="flex flex-col gap-2 group hover:cursor-pointer"
           v-for="show in shows"

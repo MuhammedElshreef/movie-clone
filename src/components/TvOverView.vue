@@ -78,19 +78,7 @@ watch(
               </a>
             </div>
           </div>
-          <!-- add page for the route -->
-          <div class="flex gap-8 lg:gap-16" v-if="props.show.genres">
-            <span class="w-24">Genre</span>
-            <div class="flex gap-2">
-              <a
-                v-for="genre in props.show.genres"
-                :key="genre.id"
-                class="text-[#1E89DE] underline"
-              >
-                {{ genre.name }}
-              </a>
-            </div>
-          </div>
+
           <div class="flex gap-8 lg:gap-16" v-if="props.show.number_of_seasons">
             <span class="w-24">Seasons</span>
             <p>{{ props.show.number_of_seasons }}</p>

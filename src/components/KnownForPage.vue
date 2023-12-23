@@ -43,13 +43,13 @@ onMounted(() => {
         <img
           v-if="credit.poster_path"
           :src="`https://image.tmdb.org/t/p/w500${credit.poster_path}`"
-          class="h-[372px] w-[248px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+          class="lg:h-[372px] lg:w-[248px] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
           alt="show poster image "
           loading="lazy"
         />
         <div
           v-else
-          class="flex justify-center items-center h-[372px] w-[246px] bg-[#202124] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
+          class="flex justify-center items-center lg:h-[372px] lg:w-[246px] w-[164px] h-[245px] bg-[#202124] transition ease-in-out group-hover:-translate-y-1 group-hover:scale-105 duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
